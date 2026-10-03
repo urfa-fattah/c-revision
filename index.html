@@ -1,4 +1,5 @@
 <title>C Final Revision Notes</title>
+<script>document.documentElement.classList.add("js");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Patrick+Hand&display=swap">
@@ -31,7 +32,7 @@ p{margin:8px 0}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0 40px;margin-top:20px}
 @media(min-width:1020px){
   .layout{grid-template-columns:230px minmax(0,1fr)}
-  .side{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;display:block!important}
+  .side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;display:block!important}
 }
 .side{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px 24px;margin-bottom:8px;font-size:.92rem;min-width:0}
 .side .grp{display:flex;flex-direction:column;min-width:0}
@@ -42,7 +43,7 @@ main{min-width:0;border-left:2px solid var(--red);padding-left:clamp(14px,3vw,30
 .part{font-family:var(--display);font-size:1.15rem;color:var(--red);letter-spacing:.04em;margin:48px 0 0;padding:6px 0;border-bottom:2px solid var(--red)}
 .part:first-child{margin-top:0}
 .part span{display:inline-block;background:var(--red);color:var(--paper);border-radius:4px;padding:0 9px;margin-right:10px;font-size:1rem}
-section{padding-top:34px;margin-top:6px;scroll-margin-top:12px}
+section{padding-top:34px;margin-top:6px;scroll-margin-top:70px}
 section+section{border-top:1px dashed var(--rule);margin-top:34px}
 .tag{display:inline-block;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 9px;border-radius:99px;
   border:1px solid var(--red);color:var(--red);vertical-align:middle;margin-left:6px;font-family:var(--body);font-weight:600}
@@ -85,6 +86,21 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .refs li{margin:6px 0}
 a{color:var(--blue)}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule);
+  padding:8px 0;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;margin-top:10px}
+.toolbar label{display:inline-flex;gap:8px;align-items:center;cursor:pointer;font-weight:500}
+.toolbar input{width:18px;height:18px;accent-color:var(--blue)}
+.toolbar .hint{color:var(--muted);font-size:.85rem}
+.js pre.out{display:none}
+.js pre.out.shown{display:block}
+.runbtn{font-family:var(--mono);font-size:.78rem;background:var(--card);color:var(--blue);border:1px solid var(--blue);
+  border-radius:6px;padding:3px 11px;cursor:pointer;margin:-2px 0 10px;display:inline-block}
+.runbtn:hover{background:var(--code-bg)}
+.runbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+details.practice details>div{margin:6px 0 4px}
+details.practice details pre{margin:6px 0}
+h3+p.cap{margin-top:0}
 </style>
 
 <div class="wrap">
@@ -94,6 +110,11 @@ a{color:var(--blue)}
   <p class="sub"><span class="tag">Marked ➜</span> you drew an arrow on it &nbsp; <span class="tag hash">#</span> hash-marked item &nbsp; <span class="tag done">✓</span> ticked &nbsp; <span class="tag sup">Supporting</span> added concept. Your page also shows <mark>5/6 marks</mark> beside the Introduction block, so topics 1 to 3 should be written as full answers (see the answer guide in section 17).</p>
 </header>
 
+<div class="toolbar" role="group" aria-label="Page options">
+  <label for="showAllOut"><input type="checkbox" id="showAllOut"> Show all outputs</label>
+  <label for="openAllAns"><input type="checkbox" id="openAllAns"> Open all answers</label>
+  <span class="hint">Outputs and answers stay hidden until you ask, so you can predict first.</span>
+</div>
 <div class="layout">
 <nav class="side" aria-label="Contents">
   <div class="grp"><b>A · Foundations</b>
@@ -156,11 +177,93 @@ a{color:var(--blue)}
   <div class="box exam"><b>Exam focus (5/6 marks)</b>
     Write in this order: <b>definition → inventor and year → 5 to 6 features → advantages / limitations → uses → a 4-line sample program.</b> Use the words "structured", "procedural", "middle-level" and "portable" explicitly.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Hello, World!</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Hello, World!\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Hello, World!</code></pre>
+<h4>Print details on separate lines</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Course:\tC Programming\n");
+    printf("Dept:\tCSE\n");
+    printf("He said, \"C is fun!\"\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Course:	C Programming
+Dept:	CSE
+He said, "C is fun!"</code></pre>
+<h4>Sum of two numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+    scanf("%d %d", &amp;a, &amp;b);
+    printf("Sum = %d\n", a + b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 12 30
+Sum = 42</code></pre>
+<h4>Add, subtract, multiply, divide</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+    scanf("%d %d", &amp;a, &amp;b);
+    printf("%d + %d = %d\n", a, b, a + b);
+    printf("%d - %d = %d\n", a, b, a - b);
+    printf("%d * %d = %d\n", a, b, a * b);
+    printf("%d / %d = %d\n", a, b, a / b);
+    printf("%d %% %d = %d\n", a, b, a % b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 20 6
+20 + 6 = 26
+20 - 6 = 14
+20 * 6 = 120
+20 / 6 = 3
+20 % 6 = 2</code></pre>
+<h4>Simple interest</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    float p, r, t;
+    scanf("%f %f %f", &amp;p, &amp;r, &amp;t);
+    printf("Simple interest = %.2f\n", p * r * t / 100);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5000 5 8
+Simple interest = 2000.00</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Why is C called a middle-level language?<details><summary>Show answer</summary><p>It supports high-level features such as functions, loops and structured code, but also low-level operations such as direct memory access using pointers and bitwise operators.</p></details></li>
     <li>Name two languages C was derived from.<details><summary>Show answer</summary><p>B and BCPL.</p></details></li>
     <li>Why was C created?<details><summary>Show answer</summary><p>To rewrite the UNIX operating system in a language more portable than assembly.</p></details></li>
-  </ol></details>
+  <li>Which header file is needed for <code>printf</code> and <code>scanf</code>?<details><summary>Show answer</summary><div><code>stdio.h</code> (standard input/output).</div></details></li>
+<li>What is the extension of a C source file and of a Windows executable?<details><summary>Show answer</summary><div><code>.c</code> for source code and <code>.exe</code> for the Windows executable.</div></details></li>
+<li>Write any five features of C.<details><summary>Show answer</summary><div>Structured, procedural, portable, fast, middle-level, rich library, supports pointers, small set of keywords (pick five and give one line each).</div></details></li>
+<li>Differentiate C and C++ in three points.<details><summary>Show answer</summary><div>C is procedural, C++ supports object-oriented programming (classes, inheritance). C has no function overloading, C++ has. C uses <code>malloc</code>/<code>free</code>, C++ also has <code>new</code>/<code>delete</code>. C++ was built on top of C.</div></details></li>
+<li>Is C case-sensitive? Give an example.<details><summary>Show answer</summary><div>Yes. <code>Total</code> and <code>total</code> are two different identifiers, and <code>Main()</code> is not <code>main()</code>.</div></details></li>
+<li>Write a program to print your name, roll and department on separate lines.<details><summary>Show answer</summary><div><pre><code>#include &lt;stdio.h&gt;
+int main()
+{
+    printf("Name: ...\n");
+    printf("Roll: ...\n");
+    printf("Dept: CSE\n");
+    return 0;
+}</code></pre></div></details></li>
+<li>Why is C called a structured language?<details><summary>Show answer</summary><div>Programs are built from functions and control structures (if, loops, switch) so the code is organised into small readable blocks instead of random jumps.</div></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 2 ============ -->
@@ -206,10 +309,78 @@ Machine language:        a CPU-specific pattern of 0s and 1s</code></pre>
   <div class="box"><b>Remember</b>
     C is a <mark>compiled</mark> language, so a syntax error anywhere stops the build and no executable is produced. An interpreted program may run for a while before reaching a faulty line.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Print a number in binary (low-level bit control)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 10;
+    for (int i = 7; i &gt;= 0; i--)
+        printf("%d", (n &gt;&gt; i) &amp; 1);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>00001010</code></pre>
+<h4>Even or odd using a bitwise AND</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 7;
+    printf("%s\n", (n &amp; 1) ? "Odd" : "Even");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Odd</code></pre>
+<h4>Swap two numbers with XOR (no third variable)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 5, b = 9;
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    printf("a = %d, b = %d\n", a, b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>a = 9, b = 5</code></pre>
+<h4>Pointer: value and address (middle-level feature)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 42;
+    int *p = &amp;x;           /* p stores the address of x */
+    printf("x = %d, *p = %d\n", x, *p);
+    *p = 100;              /* change x through its address */
+    printf("x = %d\n", x);
+    return 0;
+}</code></pre>
+<pre class="out"><code>x = 42, *p = 42
+x = 100</code></pre>
+<h4>High-level readability: average in one line</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 70, b = 85, c = 90;
+    printf("Average = %.2f\n", (a + b + c) / 3.0);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Average = 81.67</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Write four differences between a compiler and an interpreter.<details><summary>Show answer</summary><p>Compiler: translates whole program at once; shows all errors together; faster execution afterwards; creates a separate executable. Interpreter: translates line by line; stops at first error; slower execution; no separate executable.</p></details></li>
     <li>Which translator converts assembly to machine code?<details><summary>Show answer</summary><p>The assembler.</p></details></li>
-  </ol></details>
+  <li>Define machine language and assembly language.<details><summary>Show answer</summary><div><b>Machine language</b> is the binary code (0 and 1) the CPU executes directly. <b>Assembly language</b> uses short mnemonics such as <code>MOV</code> and <code>ADD</code> instead of binary and needs an assembler.</div></details></li>
+<li>What is source code and what is object code?<details><summary>Show answer</summary><div>Source code is the program written by the programmer (<code>prog.c</code>). Object code is the machine-code output of the compiler/assembler (<code>prog.o</code>), not yet linked.</div></details></li>
+<li>Why is a compiled program usually faster than an interpreted one?<details><summary>Show answer</summary><div>A compiler translates the whole program to machine code once. An interpreter translates each line again every time the program runs.</div></details></li>
+<li>Give two advantages of high-level and two of low-level languages.<details><summary>Show answer</summary><div>High-level: easy to read and write; portable. Low-level: very fast; full control of hardware.</div></details></li>
+<li>Is C compiled or interpreted? What about Python?<details><summary>Show answer</summary><div>C is compiled. Python is normally interpreted (it runs through a bytecode interpreter).</div></details></li>
+<li>What is a translator? Name three types.<details><summary>Show answer</summary><div>A translator converts a program from one language to another. Compiler, interpreter and assembler.</div></details></li>
+<li>Which is closer to hardware, assembly or C?<details><summary>Show answer</summary><div>Assembly.</div></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 3 ============ -->
@@ -368,11 +539,121 @@ Area = 78.54</code></pre>
   <div class="box exam"><b>Exam focus</b>
     Typical theory questions: "What is a token? Name its types", "Why do we use a semicolon?", "Explain the structure of a C program", "Difference between syntax error and logical error". Always add a one-line example.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Area and perimeter of a rectangle</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    float l, w;
+    scanf("%f %f", &amp;l, &amp;w);
+    printf("Area = %.2f\n", l * w);
+    printf("Perimeter = %.2f\n", 2 * (l + w));
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 8 5
+Area = 40.00
+Perimeter = 26.00</code></pre>
+<h4>Celsius to Fahrenheit</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    float c, f;
+    scanf("%f", &amp;c);
+    f = c * 9 / 5 + 32;
+    printf("%.1f C = %.1f F\n", c, f);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 37
+37.0 C = 98.6 F</code></pre>
+<h4>Minutes to hours and minutes</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int total;
+    scanf("%d", &amp;total);
+    printf("%d hour(s) %d minute(s)\n", total / 60, total % 60);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 135
+2 hour(s) 15 minute(s)</code></pre>
+<h4>ASCII value of a character</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char ch;
+    scanf(" %c", &amp;ch);
+    printf("%c = %d\n", ch, ch);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: a
+a = 97</code></pre>
+<h4>Read a name and an age</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[20];
+    int age;
+    scanf("%s %d", name, &amp;age);
+    printf("Name: %s, Age: %d\n", name, age);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: Rafi 21
+Name: Rafi, Age: 21</code></pre>
+<h4>Formatted table with printf widths</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("%-10s%5s\n", "Item", "Qty");
+    printf("%-10s%5d\n", "Pen", 12);
+    printf("%-10s%5d\n", "Book", 3);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Item        Qty
+Pen          12
+Book          3</code></pre>
+<h4>Escape sequences</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Line1\nLine2\n");
+    printf("A\tB\tC\n");
+    printf("Path: C:\\Users\\Docs\n");
+    printf("Percent: 50%%\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Line1
+Line2
+A	B	C
+Path: C:\Users\Docs
+Percent: 50%</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>How many tokens are in <code>printf("Hi");</code>?<details><summary>Show answer</summary><p>5: <code>printf</code> (identifier), <code>(</code>, <code>"Hi"</code> (string literal), <code>)</code>, <code>;</code>.</p></details></li>
     <li>What does <code>return 0;</code> in <code>main</code> mean?<details><summary>Show answer</summary><p>The program ended successfully; the value goes back to the operating system.</p></details></li>
     <li>Why does <code>scanf("%d", a);</code> usually crash?<details><summary>Show answer</summary><p>scanf needs the <i>address</i> of the variable. It should be <code>&amp;a</code>.</p></details></li>
-  </ol></details>
+  <li>What is the purpose of <code>#include &lt;stdio.h&gt;</code>?<details><summary>Show answer</summary><div>It copies the declarations of the standard input/output functions (<code>printf</code>, <code>scanf</code>, ...) into the program before compiling.</div></details></li>
+<li>Difference between <code>printf</code> and <code>scanf</code>?<details><summary>Show answer</summary><div><code>printf</code> prints output on the screen, <code>scanf</code> reads input from the keyboard. <code>scanf</code> needs the address of the variable (<code>&amp;x</code>).</div></details></li>
+<li>What do <code>%d</code>, <code>%f</code>, <code>%c</code> and <code>%s</code> print?<details><summary>Show answer</summary><div><code>%d</code> an int, <code>%f</code> a float/double, <code>%c</code> one character, <code>%s</code> a string.</div></details></li>
+<li>Find the errors in each line:
+<pre><code>int 2num = 5;
+printf("Hello);
+scanf("%d", n);
+Int x;</code></pre><details><summary>Show answer</summary><div><code>2num</code> starts with a digit; the string in <code>printf</code> has no closing quote; <code>scanf</code> needs <code>&amp;n</code>; <code>Int</code> must be lowercase <code>int</code>.</div></details></li>
+<li>Differentiate keyword and identifier.<details><summary>Show answer</summary><div>A keyword is a reserved word with fixed meaning (<code>int</code>, <code>while</code>). An identifier is a name given by the programmer (<code>sum</code>, <code>total_marks</code>).</div></details></li>
+<li>Why does every C program need <code>main()</code>?<details><summary>Show answer</summary><div>Execution always starts from <code>main()</code>. Without it the linker reports an error.</div></details></li>
+<li>Write the escape sequences for new line, tab, backslash and double quote.<details><summary>Show answer</summary><div><code>\n</code>, <code>\t</code>, <code>\\</code>, <code>\"</code>.</div></details></li>
+<li>Predict the output:<pre><code>printf("%5.1f|%-6d|%c\n", 3.14159, 42, 'Z');</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>  3.1|42    |Z</code></pre><p>Width 5 with 1 decimal, then 42 left-aligned in width 6, then the character.</p></details></li>
+<li>Predict the output:<pre><code>printf("%d + %d = %d\n", 2, 3, 2 + 3);
+printf("Hi\tthere\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>2 + 3 = 5
+Hi	there</code></pre></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 4 ============ -->
@@ -432,11 +713,98 @@ int a = 100 + 1;       // after preprocessing (plain text replacement)</code></p
   <div class="box exam"><b>Exam focus</b>
     A 5 to 6 mark question is usually "Explain the process of compiling and running a C program with a diagram". Draw the 6-box flow above, name the file at each stage, and give one sentence per stage.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>math.h functions (compile with -lm)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main()
+{
+    printf("%.2f\n", sqrt(144));
+    printf("%.0f\n", pow(2, 10));
+    printf("%.0f %.0f\n", ceil(4.2), floor(4.8));
+    printf("%.1f\n", fabs(-7.5));
+    return 0;
+}</code></pre>
+<pre class="out"><code>12.00
+1024
+5 4
+7.5</code></pre>
+<h4>Preprocessor: macro, __LINE__ and #ifdef</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#define SQUARE(x) ((x) * (x))
+#define DEBUG
+
+int main()
+{
+    printf("This is line number %d\n", __LINE__);
+    printf("7 squared = %d\n", SQUARE(7));
+#ifdef DEBUG
+    printf("Debug mode is ON\n");
+#endif
+    return 0;
+}</code></pre>
+<pre class="out"><code>This is line number 7
+7 squared = 49
+Debug mode is ON</code></pre>
+<h4>Command-line arguments</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    printf("Argument count = %d\n", argc);
+    for (int i = 0; i &lt; argc; i++)
+        printf("argv[%d] = %s\n", i, argv[i]);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Command: ./prog hello 25
+Argument count = 3
+argv[0] = ./prog
+argv[1] = hello
+argv[2] = 25</code></pre>
+<h4>A logical error and its fix</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10, b = 20;
+    printf("Wrong  : %d\n", a + b / 2);     /* / runs before + */
+    printf("Correct: %d\n", (a + b) / 2);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Wrong  : 20
+Correct: 15</code></pre>
+<h4>Return value of main</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Finished normally\n");
+    return 0;      /* 0 = success; echo $? shows it on Linux */
+}</code></pre>
+<pre class="out"><code>Finished normally</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>What is an object file?<details><summary>Show answer</summary><p>The machine-code output of the assembler for one source file; it is not runnable until the linker adds library code and resolves function calls.</p></details></li>
     <li>Which stage reports "undefined reference to ..."?<details><summary>Show answer</summary><p>The linker.</p></details></li>
     <li>Why can a program compile without errors and still be wrong?<details><summary>Show answer</summary><p>The compiler checks only grammar. A logical error such as a wrong formula or condition is not detected.</p></details></li>
-  </ol></details>
+  <li>Which files are produced by <code>gcc -save-temps prog.c</code>?<details><summary>Show answer</summary><div><code>prog.i</code> (preprocessed), <code>prog.s</code> (assembly), <code>prog.o</code> (object) and the executable <code>a.out</code>.</div></details></li>
+<li>What is a header file and why do we need it?<details><summary>Show answer</summary><div>A header file contains declarations (function prototypes, macros, types). It lets the compiler check calls such as <code>printf(...)</code>.</div></details></li>
+<li>Difference between a compiler and a linker?<details><summary>Show answer</summary><div>The compiler translates source code to object code. The linker joins object code with library code to make the executable.</div></details></li>
+<li>What does the <code>-Wall</code> option do?<details><summary>Show answer</summary><div>It switches on almost all common compiler warnings, which helps to catch mistakes early.</div></details></li>
+<li>Write the command to compile <code>prog.c</code> into an executable named <code>calc</code> and run it.<details><summary>Show answer</summary><div><pre><code>gcc prog.c -o calc
+./calc</code></pre></div></details></li>
+<li>Why do we write <code>-lm</code> when using <code>sqrt</code> or <code>pow</code> with GCC on Linux?<details><summary>Show answer</summary><div>The math functions live in the separate math library. <code>-lm</code> tells the linker to include it.</div></details></li>
+<li>Give one example each of a syntax error, a runtime error and a logical error.<details><summary>Show answer</summary><div>Syntax: missing <code>;</code>. Runtime: divide by zero. Logical: using <code>a + b / 2</code> for an average.</div></details></li>
+<li>Predict the output:<pre><code>#include &lt;stdio.h&gt;
+#define DOUBLE(x) x + x
+
+int main()
+{
+    printf("%d\n", DOUBLE(3) * 2);
+    return 0;
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>9</code></pre><p>The macro expands to <code>3 + 3 * 2</code>, so multiplication runs first: 3 + 6 = 9. Wrapping the macro body in parentheses gives 12.</p></details></li>
+</ol></details>
 </section>
 
 <div class="part"><span>Part B</span>Data and expressions</div>
@@ -551,11 +919,148 @@ printf("%d %d\n", a, b);           // 8 3</code></pre>
   <div class="box warn"><b>Overflow</b>
     <code>int</code> cannot hold values beyond 2,147,483,647. For signed types, going past the limit is undefined behaviour (usually the number wraps to a negative one). Use <code>long long</code> for big results such as factorials.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Size of every basic type</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("char      : %zu\n", sizeof(char));
+    printf("short     : %zu\n", sizeof(short));
+    printf("int       : %zu\n", sizeof(int));
+    printf("long long : %zu\n", sizeof(long long));
+    printf("float     : %zu\n", sizeof(float));
+    printf("double    : %zu\n", sizeof(double));
+    return 0;
+}</code></pre>
+<pre class="out"><code>char      : 1
+short     : 2
+int       : 4
+long long : 8
+float     : 4
+double    : 8</code></pre>
+<h4>Swap two numbers (with and without a third variable)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 3, b = 8, temp;
+    temp = a;  a = b;  b = temp;
+    printf("With temp   : a=%d b=%d\n", a, b);
+
+    a = a + b;  b = a - b;  a = a - b;
+    printf("Without temp: a=%d b=%d\n", a, b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>With temp   : a=8 b=3
+Without temp: a=3 b=8</code></pre>
+<h4>Seconds to hh:mm:ss</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int sec;
+    scanf("%d", &amp;sec);
+    printf("%02d:%02d:%02d\n", sec / 3600, (sec % 3600) / 60, sec % 60);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 3725
+01:02:05</code></pre>
+<h4>Average of three marks with type casting</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int m1 = 78, m2 = 85, m3 = 91;
+    int sum = m1 + m2 + m3;
+    float without = sum / 3;              /* integer division first */
+    float with    = (float) sum / 3;      /* cast first */
+    printf("Without cast: %.2f\n", without);
+    printf("With cast   : %.2f\n", with);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Without cast: 84.00
+With cast   : 84.67</code></pre>
+<h4>Change letter case using ASCII</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char ch;
+    scanf(" %c", &amp;ch);
+    if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z')
+        printf("%c\n", ch - 32);
+    else if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z')
+        printf("%c\n", ch + 32);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: g
+G</code></pre>
+<h4>float vs double precision</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    float  f = 0.1f;
+    double d = 0.1;
+    printf("float : %.10f\n", f);
+    printf("double: %.10f\n", d);
+    return 0;
+}</code></pre>
+<pre class="out"><code>float : 0.1000000015
+double: 0.1000000000</code></pre>
+<h4>unsigned char wraps around</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned char c = 255;
+    c = c + 1;
+    printf("%d\n", c);
+    return 0;
+}</code></pre>
+<pre class="out"><code>0</code></pre>
+<h4>Local variable hides a global one</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int x = 10;                       /* global */
+
+int main()
+{
+    int x = 20;                   /* local, hides the global x */
+    printf("%d\n", x);
+    {
+        int x = 30;               /* inner block */
+        printf("%d\n", x);
+    }
+    printf("%d\n", x);
+    return 0;
+}</code></pre>
+<pre class="out"><code>20
+30
+20</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>What is the output of <code>printf("%d", 10 / 4);</code> and <code>printf("%.1f", 10 / 4.0);</code>?<details><summary>Show answer</summary><p>2 and 2.5.</p></details></li>
     <li>Declare variables to store: roll number, CGPA, grade letter, a very large population.<details><summary>Show answer</summary><p><code>int roll; float cgpa; char grade; long long population;</code></p></details></li>
     <li>What does <code>printf("%c", 'C' + 2);</code> print?<details><summary>Show answer</summary><p><code>E</code> (67 + 2 = 69, which is 'E').</p></details></li>
-  </ol></details>
+  <li>Difference between declaration and initialization?<details><summary>Show answer</summary><div>Declaration only creates the variable (<code>int a;</code>). Initialization gives it a first value (<code>int a = 5;</code>).</div></details></li>
+<li>Why does <code>float x = 5 / 2;</code> store 2.00 and not 2.50?<details><summary>Show answer</summary><div><code>5 / 2</code> is integer division and gives 2 before the value is stored in the float. Use <code>5 / 2.0</code> or <code>(float) 5 / 2</code>.</div></details></li>
+<li>What are the typical sizes of char, int, float and double?<details><summary>Show answer</summary><div>1, 4, 4 and 8 bytes.</div></details></li>
+<li>Write the rules for naming a variable.<details><summary>Show answer</summary><div>Letters, digits and underscore only; must not start with a digit; no spaces; not a keyword; case-sensitive.</div></details></li>
+<li>What is a garbage value?<details><summary>Show answer</summary><div>The unpredictable leftover content of a local variable that was declared but not initialized.</div></details></li>
+<li>Differentiate local and global variables.<details><summary>Show answer</summary><div>A local variable is declared inside a function/block and exists only there; it starts with garbage. A global variable is declared outside all functions, is visible everywhere below it and starts as 0.</div></details></li>
+<li>How does C represent true and false?<details><summary>Show answer</summary><div>0 is false and every non-zero value is true. Comparisons produce 1 or 0. <code>stdbool.h</code> adds <code>bool</code>, <code>true</code>, <code>false</code> from C99.</div></details></li>
+<li>What is type casting? Give an example.<details><summary>Show answer</summary><div>Forcing a value to another type: <code>(float) sum / n</code> converts <code>sum</code> to float before dividing.</div></details></li>
+<li>Predict the output:<pre><code>printf("%d %d\n", 'A', 'A' + 1);
+printf("%c\n", 'a' + 2);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>65 66
+c</code></pre></details></li>
+<li>Predict the output:<pre><code>printf("%.1f\n", 7 / 2 * 2.0);
+printf("%.1f\n", 7 / 2.0 * 2);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>6.0
+7.0</code></pre><p><code>7 / 2</code> is 3 (integer) so the first line gives 3 * 2.0 = 6.0. In the second, <code>7 / 2.0</code> is 3.5 so the result is 7.0.</p></details></li>
+<li>Predict the output:<pre><code>int x = 3.99;
+printf("%d\n", x);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>3</code></pre><p>Assigning a double to an int drops the fractional part (no rounding).</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 6 ============ -->
@@ -613,10 +1118,104 @@ int main()
 }</code></pre>
 <pre class="out"><code>Total = 210.00</code></pre>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>const and #define together (circle)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#define PI 3.14159
+
+int main()
+{
+    const int R = 7;
+    printf("Area          = %.2f\n", PI * R * R);
+    printf("Circumference = %.2f\n", 2 * PI * R);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Area          = 153.94
+Circumference = 43.98</code></pre>
+<h4>enum for named constants</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+enum Day { SAT, SUN, MON, TUE };
+enum Level { LOW = 1, MEDIUM = 5, HIGH = 10 };
+
+int main()
+{
+    printf("%d %d %d\n", SAT, MON, TUE);
+    printf("%d\n", MEDIUM + HIGH);
+    enum Day today = SUN;
+    if (today == SUN) printf("Today is Sunday\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>0 2 3
+15
+Today is Sunday</code></pre>
+<h4>Macros with parameters: MAX and MIN</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))
+#define MIN(a, b) ((a) &lt; (b) ? (a) : (b))
+
+int main()
+{
+    printf("%d %d\n", MAX(8, 3), MIN(8, 3));
+    printf("%d\n", MAX(2 + 3, 4));
+    return 0;
+}</code></pre>
+<pre class="out"><code>8 3
+5</code></pre>
+<h4>#define for an array size</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#define SIZE 5
+
+int main()
+{
+    int a[SIZE] = {3, 1, 4, 1, 5};
+    int sum = 0;
+    for (int i = 0; i &lt; SIZE; i++) sum += a[i];
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum = 14</code></pre>
+<h4>Different forms of integer and real constants</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("%d %d %d\n", 25, 031, 0x19);    /* decimal, octal, hex */
+    printf("%.1f %.1f\n", 2.5e3, 4e2);       /* exponent form */
+    printf("%c %d\n", 'A', 'A');             /* character constant */
+    return 0;
+}</code></pre>
+<pre class="out"><code>25 25 25
+2500.0 400.0
+A 65</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Why is <code>#define N 10;</code> risky?<details><summary>Show answer</summary><p>The semicolon becomes part of the replacement text. <code>int a[N];</code> turns into <code>int a[10;];</code>, a syntax error.</p></details></li>
     <li>Write a constant for 3 declared two different ways.<details><summary>Show answer</summary><p><code>const int X = 3;</code> and <code>#define X 3</code>.</p></details></li>
-  </ol></details>
+  <li>What is a constant? How is it different from a variable?<details><summary>Show answer</summary><div>A constant keeps one fixed value during the whole run; a variable's value can change.</div></details></li>
+<li>Differentiate <code>const</code> and <code>#define</code>.<details><summary>Show answer</summary><div><code>const</code> is handled by the compiler, has a data type and uses memory. <code>#define</code> is handled by the preprocessor, has no type and is plain text replacement. <code>#define</code> lines end without a semicolon.</div></details></li>
+<li>Why must a <code>const</code> variable be initialized at its declaration?<details><summary>Show answer</summary><div>It can never be assigned later, so <code>const int N;</code> would stay with a garbage value forever.</div></details></li>
+<li>What is an <code>enum</code>? Give an example.<details><summary>Show answer</summary><div>A user-defined type with named integer constants, starting from 0 unless set: <code>enum Day { SAT, SUN, MON };</code>.</div></details></li>
+<li>Write a macro for the cube of a number.<details><summary>Show answer</summary><div><code>#define CUBE(x) ((x) * (x) * (x))</code></div></details></li>
+<li>What is wrong with <code>#define PI 3.14;</code>?<details><summary>Show answer</summary><div>The semicolon becomes part of the replacement text, so <code>2 * PI * r</code> expands to <code>2 * 3.14; * r</code> and gives a compile error.</div></details></li>
+<li>Predict the output:<pre><code>#include &lt;stdio.h&gt;
+#define SQ(x) x*x
+
+int main()
+{
+    printf("%d\n", SQ(4 + 1));
+    return 0;
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>9</code></pre><p>The macro expands to <code>4 + 1*4 + 1</code> = 9, not 25.</p></details></li>
+<li>Predict the output:<pre><code>#include &lt;stdio.h&gt;
+
+enum { A, B = 5, C };
+
+int main()
+{
+    printf("%d %d %d\n", A, B, C);
+    return 0;
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>0 5 6</code></pre><p>A starts at 0, B is set to 5, and C continues from the previous value: 6.</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 7 ============ -->
@@ -690,11 +1289,130 @@ int t = !0 &amp;&amp; 5 &gt; 3 || 0;
 
   <div class="box tip"><b>Habit</b> When unsure, add parentheses. <code>(a + b) / 2</code> is a correct average; <code>a + b / 2</code> is not.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>All arithmetic operators on two numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+    scanf("%d %d", &amp;a, &amp;b);
+    printf("%d %d %d %d %d\n", a + b, a - b, a * b, a / b, a % b);
+    printf("%.2f\n", (float) a / b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 17 5
+22 12 85 3 2
+3.40</code></pre>
+<h4>Relational and logical results</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10, b = 20;
+    printf("%d %d %d\n", a &lt; b, a == b, a != b);
+    printf("%d %d %d\n", (a &lt; b &amp;&amp; b &lt; 30), (a &gt; b || b == 20), !(a &lt; b));
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 0 1
+1 1 0</code></pre>
+<h4>Compound assignment, step by step</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 10;
+    x += 5;  printf("%d\n", x);
+    x -= 3;  printf("%d\n", x);
+    x *= 2;  printf("%d\n", x);
+    x /= 4;  printf("%d\n", x);
+    x %= 4;  printf("%d\n", x);
+    return 0;
+}</code></pre>
+<pre class="out"><code>15
+12
+24
+6
+2</code></pre>
+<h4>Bitwise operators</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 12, b = 10;       /* 1100 and 1010 */
+    printf("a &amp; b  = %d\n", a &amp; b);
+    printf("a | b  = %d\n", a | b);
+    printf("a ^ b  = %d\n", a ^ b);
+    printf("~a     = %d\n", ~a);
+    printf("a &lt;&lt; 1 = %d\n", a &lt;&lt; 1);
+    printf("a &gt;&gt; 2 = %d\n", a &gt;&gt; 2);
+    return 0;
+}</code></pre>
+<pre class="out"><code>a &amp; b  = 8
+a | b  = 14
+a ^ b  = 6
+~a     = -13
+a &lt;&lt; 1 = 24
+a &gt;&gt; 2 = 3</code></pre>
+<h4>Digits of a three-digit number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    int d1 = n / 100, d2 = n / 10 % 10, d3 = n % 10;
+    printf("%d %d %d\n", d1, d2, d3);
+    printf("Sum = %d, Reverse = %d\n", d1 + d2 + d3, d3 * 100 + d2 * 10 + d1);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 472
+4 7 2
+Sum = 13, Reverse = 274</code></pre>
+<h4>Precedence trap: 1/2 vs 0.5</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    float b = 10, h = 6;
+    printf("Wrong : %.2f\n", 1 / 2 * b * h);     /* 1/2 is integer division = 0 */
+    printf("Right : %.2f\n", 0.5 * b * h);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Wrong : 0.00
+Right : 30.00</code></pre>
+<h4>Evaluating mixed expressions</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("%d\n", 2 + 3 * 4 % 5 - 1);
+    printf("%d\n", !0 &amp;&amp; 5 &gt; 3 || 0);
+    printf("%d\n", 10 - 4 / 2 * 3 + 1);
+    return 0;
+}</code></pre>
+<pre class="out"><code>3
+1
+5</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Evaluate <code>10 - 4 / 2 * 3 + 1</code>.<details><summary>Show answer</summary><p>4/2 = 2, 2*3 = 6, 10 - 6 = 4, 4 + 1 = 5.</p></details></li>
     <li>What does <code>if (x = 5)</code> do?<details><summary>Show answer</summary><p>Assigns 5 to x, then tests the value 5, which is non-zero, so the condition is always true.</p></details></li>
     <li>Value of <code>17 % 5 + 17 / 5</code>?<details><summary>Show answer</summary><p>2 + 3 = 5.</p></details></li>
-  </ol></details>
+  <li>Differentiate <code>=</code> and <code>==</code>.<details><summary>Show answer</summary><div><code>=</code> assigns a value; <code>==</code> compares two values and gives 1 or 0.</div></details></li>
+<li>Find the value of <code>7 / 2</code>, <code>7 % 2</code> and <code>7.0 / 2</code>.<details><summary>Show answer</summary><div>3, 1 and 3.5.</div></details></li>
+<li>What is short-circuit evaluation?<details><summary>Show answer</summary><div>In <code>A &amp;&amp; B</code> the right side is skipped if A is false; in <code>A || B</code> it is skipped if A is true.</div></details></li>
+<li>Which has higher precedence, <code>&amp;&amp;</code> or <code>||</code>?<details><summary>Show answer</summary><div><code>&amp;&amp;</code>. So <code>a || b &amp;&amp; c</code> means <code>a || (b &amp;&amp; c)</code>.</div></details></li>
+<li>Write an expression that is true when <code>n</code> is divisible by both 3 and 5.<details><summary>Show answer</summary><div><code>n % 3 == 0 &amp;&amp; n % 5 == 0</code> (same as <code>n % 15 == 0</code>).</div></details></li>
+<li>Rewrite <code>x = x * 5;</code> and <code>y = y % 3;</code> with compound operators.<details><summary>Show answer</summary><div><code>x *= 5;</code> and <code>y %= 3;</code></div></details></li>
+<li>What does <code>1 &lt;&lt; 4</code> give? What does <code>20 &gt;&gt; 2</code> give?<details><summary>Show answer</summary><div>16 and 5.</div></details></li>
+<li>Predict the output:<pre><code>int a = 10, b = 3;
+printf("%d %d %.2f\n", a / b, a % b, (float) a / b);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>3 1 3.33</code></pre></details></li>
+<li>Predict the output:<pre><code>printf("%d %d\n", -7 / 2, -7 % 3);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>-3 -1</code></pre><p>C truncates toward zero, so -7 / 2 is -3, and the sign of % follows the left operand: -7 % 3 is -1.</p></details></li>
+<li>Predict the output:<pre><code>int x = 6;
+x *= 2 + 3;
+printf("%d\n", x);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>30</code></pre><p>The right side is evaluated first: x = x * (2 + 3) = 30.</p></details></li>
+</ol></details>
 </section>
 
 <div class="part"><span>Part C</span>Decision making</div>
@@ -863,11 +1581,211 @@ CGPA = 3.70</code></pre>
     <li>Comparing floats with <code>==</code>: <code>0.1 + 0.2 == 0.3</code> is false. Compare the difference with a tiny number.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Odd or even</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    if (n % 2 == 0) printf("%d is even\n", n);
+    else            printf("%d is odd\n", n);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 7
+7 is odd</code></pre>
+<h4>Positive, negative or zero</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    if (n &gt; 0)      printf("Positive\n");
+    else if (n &lt; 0) printf("Negative\n");
+    else            printf("Zero\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: -4
+Negative</code></pre>
+<h4>Leap year</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int y;
+    scanf("%d", &amp;y);
+    if ((y % 4 == 0 &amp;&amp; y % 100 != 0) || y % 400 == 0)
+        printf("%d is a leap year\n", y);
+    else
+        printf("%d is not a leap year\n", y);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 2024
+2024 is a leap year</code></pre>
+<h4>Largest of three numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c, max;
+    scanf("%d %d %d", &amp;a, &amp;b, &amp;c);
+    max = a;
+    if (b &gt; max) max = b;
+    if (c &gt; max) max = c;
+    printf("Largest = %d\n", max);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 14 29 8
+Largest = 29</code></pre>
+<h4>Vowel or consonant</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char ch;
+    scanf(" %c", &amp;ch);
+    char c = tolower(ch);
+    if (!isalpha(c))
+        printf("Not a letter\n");
+    else if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+        printf("Vowel\n");
+    else
+        printf("Consonant\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: E
+Vowel</code></pre>
+<h4>Type of a character</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char ch;
+    scanf(" %c", &amp;ch);
+    if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z')      printf("Uppercase letter\n");
+    else if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') printf("Lowercase letter\n");
+    else if (ch &gt;= '0' &amp;&amp; ch &lt;= '9') printf("Digit\n");
+    else                             printf("Special character\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 7
+Digit</code></pre>
+<h4>Roots of a quadratic equation</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main()
+{
+    double a, b, c;
+    scanf("%lf %lf %lf", &amp;a, &amp;b, &amp;c);
+    double d = b * b - 4 * a * c;
+    if (d &gt; 0) {
+        printf("Two real roots: %.2f and %.2f\n",
+               (-b + sqrt(d)) / (2 * a), (-b - sqrt(d)) / (2 * a));
+    } else if (d == 0) {
+        printf("One repeated root: %.2f\n", -b / (2 * a));
+    } else {
+        printf("No real roots\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 1 -3 2
+Two real roots: 2.00 and 1.00</code></pre>
+<h4>Voting eligibility</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age;
+    scanf("%d", &amp;age);
+    if (age &gt;= 18) printf("Eligible to vote\n");
+    else           printf("Not eligible, wait %d more year(s)\n", 18 - age);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 17
+Not eligible, wait 1 more year(s)</code></pre>
+<h4>Electricity bill with slabs</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int units;
+    double bill;
+    scanf("%d", &amp;units);
+    if (units &lt;= 100)
+        bill = units * 5.0;
+    else if (units &lt;= 200)
+        bill = 100 * 5.0 + (units - 100) * 7.0;
+    else
+        bill = 100 * 5.0 + 100 * 7.0 + (units - 200) * 10.0;
+    printf("Bill = %.2f\n", bill);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 250
+Bill = 1700.00</code></pre>
+<h4>Simple calculator with if-else</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double a, b;
+    char op;
+    scanf("%lf %c %lf", &amp;a, &amp;op, &amp;b);
+    if (op == '+')      printf("%.2f\n", a + b);
+    else if (op == '-') printf("%.2f\n", a - b);
+    else if (op == '*') printf("%.2f\n", a * b);
+    else if (op == '/' &amp;&amp; b != 0) printf("%.2f\n", a / b);
+    else                printf("Invalid input\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 9 * 4
+36.00</code></pre>
+<h4>Divisible by 3, 5 or both</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    if (n % 3 == 0 &amp;&amp; n % 5 == 0) printf("Divisible by both\n");
+    else if (n % 3 == 0)          printf("Divisible by 3 only\n");
+    else if (n % 5 == 0)          printf("Divisible by 5 only\n");
+    else                          printf("Divisible by neither\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 15
+Divisible by both</code></pre>
+<div class="box tip"><b>Complete version</b>A full CGPA program that validates every input and uses <code>switch</code> for the grade conversion is in <a href="#s9">section 9</a>.</div>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Write a condition that is true when <code>ch</code> is a lowercase vowel.<details><summary>Show answer</summary><p><code>ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u'</code></p></details></li>
     <li>Why is the leap-year test <code>y % 4 == 0</code> alone wrong?<details><summary>Show answer</summary><p>Century years like 1900 divide by 4 but are not leap years unless they also divide by 400.</p></details></li>
     <li>Marks 40 to 100 are pass, below 40 fail, but the ladder tests <code>marks &gt;= 40</code> before <code>marks &gt;= 80</code>. What is the bug?<details><summary>Show answer</summary><p>Every pass mark is caught by the first test, so higher grades are never reached.</p></details></li>
-  </ol></details>
+  <li>Difference between if-else and nested if?<details><summary>Show answer</summary><div>In if-else one condition chooses between two blocks. In a nested if, another if sits inside a block, so the inner test is checked only when the outer one is true.</div></details></li>
+<li>Why does <code>if (a &lt; b &lt; c)</code> not work as expected?<details><summary>Show answer</summary><div><code>a &lt; b</code> gives 0 or 1, and that number is then compared with <code>c</code>. Write <code>a &lt; b &amp;&amp; b &lt; c</code>.</div></details></li>
+<li>What is the dangling else problem?<details><summary>Show answer</summary><div>When there are two ifs and one else, the else belongs to the nearest unmatched if, whatever the indentation shows. Use braces.</div></details></li>
+<li>How do you compare two floating-point numbers safely?<details><summary>Show answer</summary><div>Check that the difference is tiny: <code>fabs(a - b) &lt; 1e-6</code>, instead of <code>a == b</code>.</div></details></li>
+<li>Write the conditions for a valid triangle.<details><summary>Show answer</summary><div><code>a + b &gt; c &amp;&amp; a + c &gt; b &amp;&amp; b + c &gt; a</code></div></details></li>
+<li>Write a condition: a student passes only if both theory and practical marks are at least 40.<details><summary>Show answer</summary><div><code>if (theory &gt;= 40 &amp;&amp; practical &gt;= 40) printf("Pass"); else printf("Fail");</code></div></details></li>
+<li>Write a program to find the smallest of three numbers.<details><summary>Show answer</summary><div><pre><code>int a, b, c, min;
+scanf("%d %d %d", &amp;a, &amp;b, &amp;c);
+min = a;
+if (b &lt; min) min = b;
+if (c &lt; min) min = c;
+printf("%d", min);</code></pre></div></details></li>
+<li>Predict the output:<pre><code>int a = 5, b = 10;
+if (a &gt; 3)
+    if (b &lt; 5) printf("X\n");
+    else printf("Y\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>Y</code></pre><p>The else pairs with the inner <code>if (b &lt; 5)</code>. Since a &gt; 3 is true and b &lt; 5 is false, it prints Y.</p></details></li>
+<li>Predict the output:<pre><code>int x = 3;
+if (x = 0) printf("True\n");
+else       printf("False\n");
+printf("%d\n", x);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>False
+0</code></pre><p><code>x = 0</code> is an assignment. It stores 0 in x and the condition becomes false.</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 9 ============ -->
@@ -979,10 +1897,526 @@ do {
     <li>Using a <code>float</code> or <code>string</code> as the switch expression.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Day name from a number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int day;
+    scanf("%d", &amp;day);
+    switch (day) {
+        case 1:  printf("Saturday\n");  break;
+        case 2:  printf("Sunday\n");    break;
+        case 3:  printf("Monday\n");    break;
+        case 4:  printf("Tuesday\n");   break;
+        case 5:  printf("Wednesday\n"); break;
+        case 6:  printf("Thursday\n");  break;
+        case 7:  printf("Friday\n");    break;
+        default: printf("Invalid day\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 3
+Monday</code></pre>
+<h4>Calculator with switch</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double a, b;
+    char op;
+    scanf("%lf %c %lf", &amp;a, &amp;op, &amp;b);
+    switch (op) {
+        case '+': printf("%.2f\n", a + b); break;
+        case '-': printf("%.2f\n", a - b); break;
+        case '*': printf("%.2f\n", a * b); break;
+        case '/':
+            if (b != 0) printf("%.2f\n", a / b);
+            else        printf("Division by zero\n");
+            break;
+        default: printf("Invalid operator\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 12 / 4
+3.00</code></pre>
+<h4>Vowel or consonant with switch</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char ch;
+    scanf(" %c", &amp;ch);
+    switch (tolower(ch)) {
+        case 'a': case 'e': case 'i': case 'o': case 'u':
+            printf("Vowel\n");
+            break;
+        default:
+            printf("Consonant or other\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: o
+Vowel</code></pre>
+<h4>Days in a month (grouped cases)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int month, days;
+    scanf("%d", &amp;month);
+    switch (month) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            days = 31; break;
+        case 4: case 6: case 9: case 11:
+            days = 30; break;
+        case 2:
+            days = 28; break;
+        default:
+            days = 0;
+    }
+    if (days) printf("%d days\n", days);
+    else      printf("Invalid month\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 4
+30 days</code></pre>
+<h4>Grade from marks using marks / 10</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks;
+    scanf("%d", &amp;marks);
+    switch (marks / 10) {
+        case 10: case 9: case 8: printf("A+\n"); break;
+        case 7:                  printf("A\n");  break;
+        case 6:                  printf("B\n");  break;
+        case 5:                  printf("C\n");  break;
+        case 4:                  printf("D\n");  break;
+        default:                 printf("F\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 85
+A+</code></pre>
+<h4>Letter grade to grade point</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char g;
+    scanf(" %c", &amp;g);
+    switch (toupper(g)) {
+        case 'A': printf("Grade point = 4.00\n"); break;
+        case 'B': printf("Grade point = 3.00\n"); break;
+        case 'C': printf("Grade point = 2.00\n"); break;
+        case 'D': printf("Grade point = 1.00\n"); break;
+        default:  printf("Grade point = 0.00\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: b
+Grade point = 3.00</code></pre>
+<h4>Menu-driven area program</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int choice;
+    double r, l, w;
+    do {
+        printf("1.Circle 2.Rectangle 3.Exit\n");
+        scanf("%d", &amp;choice);
+        switch (choice) {
+            case 1:
+                scanf("%lf", &amp;r);
+                printf("Area = %.2f\n", 3.14159 * r * r);
+                break;
+            case 2:
+                scanf("%lf %lf", &amp;l, &amp;w);
+                printf("Area = %.2f\n", l * w);
+                break;
+            case 3:
+                printf("Bye\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+    } while (choice != 3);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 1 3 2 4 5 3
+1.Circle 2.Rectangle 3.Exit
+Area = 28.27
+1.Circle 2.Rectangle 3.Exit
+Area = 20.00
+1.Circle 2.Rectangle 3.Exit
+Bye</code></pre>
+<h4>Complete CGPA calculator with switch (input-safe)</h4>
+<div class="box tip"><b>Edge cases this program handles</b><ul><li><b>Bad input:</b> letters, empty lines, extra characters (<code>3.2abc</code>), <code>nan</code> / <code>inf</code>, numbers that are too long. It asks again instead of crashing.</li><li><b>Ranges:</b> course count 1 to 12, marks 0 to 100, credit above 0 and up to 6, previous CGPA 0 to 4.</li><li><b>Decimals:</b> credits such as 1.5 or 0.75 are allowed. Marks are rounded to the nearest whole number first (79.5 becomes 80, 39.4 becomes 39).</li><li><b>Boundaries:</b> 80, 75, 70 ... 40 land in the correct grade because the switch uses <code>marks / 5</code>.</li><li><b>Letter grades:</b> upper or lower case and extra spaces are accepted. Invalid letters such as <code>E</code>, <code>A++</code>, <code>C-</code> are rejected.</li><li><b>F grade:</b> counted with 0.00 points and its credit, plus a warning line.</li><li><b>Previous semesters:</b> if the previous credits are 0, CGPA equals the semester GPA, otherwise the weighted average is used.</li><li><b>End of input:</b> Ctrl+D (Ctrl+Z on Windows) stops the program with a message.</li><li><b>Division by zero:</b> guarded, although it cannot happen once credits must be above 0.</li></ul></div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;math.h&gt;
+#include &lt;errno.h&gt;
+
+#define MAX_COURSES 12
+#define MAX_CREDIT  6.0
+
+/* ---------- safe input helpers ---------- */
+static void readLine(char *buf, int size)
+{
+    if (fgets(buf, size, stdin) == NULL) {            /* EOF: Ctrl+D / Ctrl+Z */
+        printf("\nInput ended. Program stopped.\n");
+        exit(1);
+    }
+    char *nl = strchr(buf, '\n');
+    if (nl != NULL) {
+        *nl = '\0';                                   /* remove the newline */
+    } else {                                          /* line was too long */
+        int ch;
+        while ((ch = getchar()) != '\n' &amp;&amp; ch != EOF) ;   /* discard the rest */
+        strcpy(buf, "?");                             /* force "invalid" */
+    }
+}
+
+static int readInt(const char *prompt, int lo, int hi)
+{
+    char line[64], *end;
+    long v;
+    for (;;) {
+        printf("%s", prompt);
+        readLine(line, sizeof line);
+        errno = 0;
+        v = strtol(line, &amp;end, 10);
+        while (isspace((unsigned char) *end)) end++;
+        if (end != line &amp;&amp; *end == '\0' &amp;&amp; errno == 0 &amp;&amp; v &gt;= lo &amp;&amp; v &lt;= hi)
+            return (int) v;
+        printf("  Invalid. Enter a whole number from %d to %d.\n", lo, hi);
+    }
+}
+
+static double readNumber(const char *prompt, double lo, double hi, int loInclusive)
+{
+    char line[64], *end;
+    double v;
+    for (;;) {
+        printf("%s", prompt);
+        readLine(line, sizeof line);
+        errno = 0;
+        v = strtod(line, &amp;end);
+        while (isspace((unsigned char) *end)) end++;
+        if (end != line &amp;&amp; *end == '\0' &amp;&amp; errno == 0 &amp;&amp; isfinite(v)
+            &amp;&amp; (loInclusive ? v &gt;= lo : v &gt; lo) &amp;&amp; v &lt;= hi)
+            return v;
+        if (loInclusive) printf("  Invalid. Enter a number from %g to %g.\n", lo, hi);
+        else             printf("  Invalid. Enter a number above %g, up to %g.\n", lo, hi);
+    }
+}
+
+/* ---------- marks -&gt; grade point (switch on 5-mark bands) ---------- */
+static double marksToPoint(int marks, char *letter)
+{
+    const char *l;
+    double gp;
+    switch (marks / 5) {
+        case 20: case 19: case 18: case 17: case 16: l = "A+"; gp = 4.00; break;  /* 80-100 */
+        case 15:                                     l = "A";  gp = 3.75; break;  /* 75-79  */
+        case 14:                                     l = "A-"; gp = 3.50; break;  /* 70-74  */
+        case 13:                                     l = "B+"; gp = 3.25; break;  /* 65-69  */
+        case 12:                                     l = "B";  gp = 3.00; break;  /* 60-64  */
+        case 11:                                     l = "B-"; gp = 2.75; break;  /* 55-59  */
+        case 10:                                     l = "C+"; gp = 2.50; break;  /* 50-54  */
+        case 9:                                      l = "C";  gp = 2.25; break;  /* 45-49  */
+        case 8:                                      l = "D";  gp = 2.00; break;  /* 40-44  */
+        default:                                     l = "F";  gp = 0.00;         /* below 40 */
+    }
+    strcpy(letter, l);
+    return gp;
+}
+
+/* ---------- letter -&gt; grade point (nested switch); returns 1 if valid ---------- */
+static int letterToPoint(const char *g, double *gp, char *letter)
+{
+    char c = (char) toupper((unsigned char) g[0]);
+    char s = (g[0] != '\0') ? g[1] : '\0';
+    if (g[0] == '\0' || (s != '\0' &amp;&amp; g[2] != '\0')) return 0;   /* empty or too long */
+    switch (c) {
+        case 'A':
+            switch (s) {
+                case '+':  *gp = 4.00; break;
+                case '\0': *gp = 3.75; break;
+                case '-':  *gp = 3.50; break;
+                default:   return 0;
+            }
+            break;
+        case 'B':
+            switch (s) {
+                case '+':  *gp = 3.25; break;
+                case '\0': *gp = 3.00; break;
+                case '-':  *gp = 2.75; break;
+                default:   return 0;
+            }
+            break;
+        case 'C':
+            switch (s) {
+                case '+':  *gp = 2.50; break;
+                case '\0': *gp = 2.25; break;
+                default:   return 0;            /* no C- in this scale */
+            }
+            break;
+        case 'D':
+            if (s != '\0') return 0;
+            *gp = 2.00;
+            break;
+        case 'F':
+            if (s != '\0') return 0;
+            *gp = 0.00;
+            break;
+        default:
+            return 0;
+    }
+    letter[0] = c; letter[1] = s; letter[2] = '\0';
+    return 1;
+}
+
+static void readGrade(const char *prompt, double *gp, char *letter)
+{
+    char line[64];
+    for (;;) {
+        printf("%s", prompt);
+        readLine(line, sizeof line);
+        char *g = line;
+        while (isspace((unsigned char) *g)) g++;                       /* trim left  */
+        size_t len = strlen(g);
+        while (len &gt; 0 &amp;&amp; isspace((unsigned char) g[len - 1])) g[--len] = '\0';   /* trim right */
+        if (letterToPoint(g, gp, letter)) return;
+        printf("  Invalid. Use A+, A, A-, B+, B, B-, C+, C, D or F.\n");
+    }
+}
+
+/* ---------- remark from CGPA (switch on 0.25-wide bands) ---------- */
+static const char *remark(double cgpa)
+{
+    switch ((int) (cgpa * 100 + 0.5) / 25) {        /* uses the rounded 2-decimal value */
+        case 16: case 15: return "Outstanding";     /* 3.75 - 4.00 */
+        case 14:          return "Excellent";       /* 3.50 - 3.74 */
+        case 13:          return "Very good";       /* 3.25 - 3.49 */
+        case 12:          return "Good";            /* 3.00 - 3.24 */
+        case 11: case 10: return "Satisfactory";    /* 2.50 - 2.99 */
+        case 9:  case 8:  return "Pass";            /* 2.00 - 2.49 */
+        default:          return "Below pass level";
+    }
+}
+
+int main(void)
+{
+    char   letter[MAX_COURSES][3];
+    double gp[MAX_COURSES], credit[MAX_COURSES];
+    double semPoints = 0, semCredits = 0, prevCredits, prevCgpa = 0;
+    int    n, mode, fails = 0;
+    char   p[64];
+
+    printf("=== CGPA Calculator ===\n");
+    n    = readInt("Number of courses this semester (1-12): ", 1, MAX_COURSES);
+    mode = readInt("Type 1 to enter marks, 2 to enter letter grades: ", 1, 2);
+    prevCredits = readNumber("Credits completed before this semester (0 if none): ", 0, 500, 1);
+    if (prevCredits &gt; 0)
+        prevCgpa = readNumber("CGPA before this semester (0-4): ", 0, 4, 1);
+
+    for (int i = 0; i &lt; n; i++) {
+        snprintf(p, sizeof p, "Course %d credit (above 0, up to 6): ", i + 1);
+        credit[i] = readNumber(p, 0, MAX_CREDIT, 0);        /* 0 is not allowed */
+
+        switch (mode) {
+            case 1:
+                snprintf(p, sizeof p, "Course %d marks (0-100): ", i + 1);
+                gp[i] = marksToPoint((int) (readNumber(p, 0, 100, 1) + 0.5), letter[i]);
+                break;
+            case 2:
+                snprintf(p, sizeof p, "Course %d grade: ", i + 1);
+                readGrade(p, &amp;gp[i], letter[i]);
+                break;
+            default:                                        /* cannot happen after readInt */
+                printf("Internal error.\n");
+                return 1;
+        }
+        semPoints  += gp[i] * credit[i];
+        semCredits += credit[i];
+        if (letter[i][0] == 'F') fails++;
+    }
+
+    if (semCredits &lt;= 0) {                                  /* defensive check */
+        printf("No valid credits, cannot calculate.\n");
+        return 1;
+    }
+
+    printf("\n%-8s%-8s%-8s%-8s%s\n", "Course", "Credit", "Grade", "GP", "Points");
+    for (int i = 0; i &lt; n; i++)
+        printf("%-8d%-8.2f%-8s%-8.2f%.2f\n", i + 1, credit[i], letter[i], gp[i], gp[i] * credit[i]);
+
+    double gpa  = semPoints / semCredits;
+    double cgpa = (prevCgpa * prevCredits + semPoints) / (prevCredits + semCredits);
+
+    printf("\nSemester credits : %.2f\n", semCredits);
+    printf("Semester GPA     : %.2f\n", gpa);
+    if (prevCredits &gt; 0)
+        printf("Total credits    : %.2f\n", prevCredits + semCredits);
+    printf("CGPA             : %.2f (%s)\n", cgpa, remark(cgpa));
+    if (fails &gt; 0)
+        printf("Warning: %d course(s) with grade F count as 0.00 points. Retake them to improve.\n", fails);
+    return 0;
+}</code></pre>
+<p class="cap">Where the <code>switch</code> is used: <code>marksToPoint</code> (marks / 5 bands), <code>letterToPoint</code> (nested switch on letter and sign), <code>remark</code> (CGPA bands) and the input mode in <code>main</code>. Compile with <code>gcc cgpa.c -o cgpa -lm</code>.</p>
+<p><b>Run 1: normal semester, marks mode, first semester</b></p>
+<pre class="out"><code>=== CGPA Calculator ===
+Number of courses this semester (1-12): 4
+Type 1 to enter marks, 2 to enter letter grades: 1
+Credits completed before this semester (0 if none): 0
+Course 1 credit (above 0, up to 6): 3
+Course 1 marks (0-100): 86
+Course 2 credit (above 0, up to 6): 3
+Course 2 marks (0-100): 72
+Course 3 credit (above 0, up to 6): 1.5
+Course 3 marks (0-100): 64
+Course 4 credit (above 0, up to 6): 3
+Course 4 marks (0-100): 58
+
+Course  Credit  Grade   GP      Points
+1       3.00    A+      4.00    12.00
+2       3.00    A-      3.50    10.50
+3       1.50    B       3.00    4.50
+4       3.00    B-      2.75    8.25
+
+Semester credits : 10.50
+Semester GPA     : 3.36
+CGPA             : 3.36 (Very good)</code></pre>
+<p><b>Run 2: letter grades, previous CGPA, many bad entries, one F</b></p>
+<pre class="out"><code>=== CGPA Calculator ===
+Number of courses this semester (1-12): 0
+  Invalid. Enter a whole number from 1 to 12.
+Number of courses this semester (1-12): 2.5
+  Invalid. Enter a whole number from 1 to 12.
+Number of courses this semester (1-12): 3
+Type 1 to enter marks, 2 to enter letter grades:
+  Invalid. Enter a whole number from 1 to 2.
+Type 1 to enter marks, 2 to enter letter grades: 3
+  Invalid. Enter a whole number from 1 to 2.
+Type 1 to enter marks, 2 to enter letter grades: 2
+Credits completed before this semester (0 if none): -5
+  Invalid. Enter a number from 0 to 500.
+Credits completed before this semester (0 if none): sixty
+  Invalid. Enter a number from 0 to 500.
+Credits completed before this semester (0 if none): 60
+CGPA before this semester (0-4): 4.5
+  Invalid. Enter a number from 0 to 4.
+CGPA before this semester (0-4): 3.2abc
+  Invalid. Enter a number from 0 to 4.
+CGPA before this semester (0-4): 3.20
+Course 1 credit (above 0, up to 6): 0
+  Invalid. Enter a number above 0, up to 6.
+Course 1 credit (above 0, up to 6): nan
+  Invalid. Enter a number above 0, up to 6.
+Course 1 credit (above 0, up to 6): inf
+  Invalid. Enter a number above 0, up to 6.
+Course 1 credit (above 0, up to 6): 7
+  Invalid. Enter a number above 0, up to 6.
+Course 1 credit (above 0, up to 6): 3
+Course 1 grade: a+
+Course 2 credit (above 0, up to 6): 2
+Course 2 grade: E
+  Invalid. Use A+, A, A-, B+, B, B-, C+, C, D or F.
+Course 2 grade: A++
+  Invalid. Use A+, A, A-, B+, B, B-, C+, C, D or F.
+Course 2 grade: b-
+Course 3 credit (above 0, up to 6): 3
+Course 3 grade: f
+
+Course  Credit  Grade   GP      Points
+1       3.00    A+      4.00    12.00
+2       2.00    B-      2.75    5.50
+3       3.00    F       0.00    0.00
+
+Semester credits : 8.00
+Semester GPA     : 2.19
+Total credits    : 68.00
+CGPA             : 3.08 (Good)
+Warning: 1 course(s) with grade F count as 0.00 points. Retake them to improve.</code></pre>
+<p><b>Run 3: marks mode, out-of-range and fractional marks</b></p>
+<pre class="out"><code>=== CGPA Calculator ===
+Number of courses this semester (1-12): 3
+Type 1 to enter marks, 2 to enter letter grades: 1
+Credits completed before this semester (0 if none): 0
+Course 1 credit (above 0, up to 6): 3
+Course 1 marks (0-100): 101
+  Invalid. Enter a number from 0 to 100.
+Course 1 marks (0-100): -1
+  Invalid. Enter a number from 0 to 100.
+Course 1 marks (0-100): 79.5
+Course 2 credit (above 0, up to 6): 2
+Course 2 marks (0-100): 39.4
+Course 3 credit (above 0, up to 6): 3
+Course 3 marks (0-100): 40
+
+Course  Credit  Grade   GP      Points
+1       3.00    A+      4.00    12.00
+2       2.00    F       0.00    0.00
+3       3.00    D       2.00    6.00
+
+Semester credits : 8.00
+Semester GPA     : 2.25
+CGPA             : 2.25 (Pass)
+Warning: 1 course(s) with grade F count as 0.00 points. Retake them to improve.</code></pre>
+<p><b>Run 4: input ends early (Ctrl+D)</b></p>
+<pre class="out"><code>=== CGPA Calculator ===
+Number of courses this semester (1-12): 3
+Type 1 to enter marks, 2 to enter letter grades:
+Input ended. Program stopped.</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Output of the fall-through code if <code>x = 3</code>?<details><summary>Show answer</summary><p><code>Three Done</code></p></details></li>
     <li>Write a switch that prints "Weekend" for 6 and 7 and "Weekday" otherwise.<details><summary>Show answer</summary><p><code>switch(d){ case 6: case 7: printf("Weekend"); break; default: printf("Weekday"); }</code></p></details></li>
-  </ol></details>
+  <li>Can a <code>switch</code> expression be a float? A string?<details><summary>Show answer</summary><div>No. It must be an integer type or <code>char</code>.</div></details></li>
+<li>What happens if <code>break</code> is missing in a case?<details><summary>Show answer</summary><div>Execution falls through into the next case (and further) until a <code>break</code> or the end of the switch.</div></details></li>
+<li>What is the purpose of <code>default</code>?<details><summary>Show answer</summary><div>It runs when no case label matches. It is optional.</div></details></li>
+<li>Can two cases have the same value?<details><summary>Show answer</summary><div>No. Case labels must be unique constants, otherwise it is a compile error.</div></details></li>
+<li>Convert to a switch:
+<pre><code>if (c == 'r') puts("Red");
+else if (c == 'g') puts("Green");
+else puts("Unknown");</code></pre><details><summary>Show answer</summary><div><pre><code>switch (c) {
+    case 'r': puts("Red");   break;
+    case 'g': puts("Green"); break;
+    default:  puts("Unknown");
+}</code></pre></div></details></li>
+<li>When is if-else better than switch?<details><summary>Show answer</summary><div>For ranges (<code>marks &gt;= 80</code>), floating-point values, strings and complex conditions.</div></details></li>
+<li>In a menu loop, what does <code>break</code> inside the switch stop?<details><summary>Show answer</summary><div>Only the switch. The surrounding loop keeps running until its condition becomes false.</div></details></li>
+<li>Predict the output:<pre><code>int x = 1;
+switch (x) {
+    case 1: printf("A");
+    case 2: printf("B"); break;
+    case 3: printf("C");
+    default: printf("D");
+}
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>AB</code></pre><p>Case 1 has no break, so B also prints, and the break in case 2 stops it.</p></details></li>
+<li>Predict the output:<pre><code>char c = 'b';
+switch (c) {
+    case 'a': printf("one\n"); break;
+    case 'b': printf("two\n");
+    case 'c': printf("three\n"); break;
+    default:  printf("other\n");
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>two
+three</code></pre></details></li>
+<li>In the CGPA program, why does the switch use <code>marks / 5</code>?<details><summary>Show answer</summary><div>Every grade covers a band of 5 marks (75 to 79, 70 to 74, and so on). Integer division maps each band to one value, so one <code>case</code> replaces a range test. 80 to 100 gives 16 to 20, which are grouped under A+.</div></details></li>
+<li>Why read input with <code>fgets</code> and <code>strtod</code> instead of <code>scanf("%lf")</code>?<details><summary>Show answer</summary><div><code>scanf</code> leaves bad text in the buffer and cannot tell <code>3.2abc</code> from <code>3.2</code>. With <code>fgets</code> a whole line is read, <code>strtod</code> reports where the number ended, and a bad line is simply rejected and asked again.</div></details></li>
+<li>A student enters 79.5 marks. What grade does the program give?<details><summary>Show answer</summary><div>The marks are rounded to 80 first, so the grade is A+ (4.00). 79.4 would round to 79 and give A (3.75).</div></details></li>
+<li>Is an F course included in the CGPA?<details><summary>Show answer</summary><div>Yes. It adds 0.00 points but its credit still counts in the total credits, which lowers the CGPA. The program also prints a warning.</div></details></li>
+<li>How is the CGPA computed when the student has earlier semesters?<details><summary>Show answer</summary><div><code>(prevCgpa * prevCredits + semPoints) / (prevCredits + semCredits)</code>, a credit-weighted average of the old and new results.</div></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 10 ============ -->
@@ -1030,10 +2464,124 @@ else         max = b;</code></pre>
     <li>Branches of very different types (a number and a string) in the same operator.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Maximum and minimum of two numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 15, b = 9;
+    printf("Max = %d\n", (a &gt; b) ? a : b);
+    printf("Min = %d\n", (a &lt; b) ? a : b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Max = 15
+Min = 9</code></pre>
+<h4>Largest of three</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c;
+    scanf("%d %d %d", &amp;a, &amp;b, &amp;c);
+    int big = (a &gt; b) ? ((a &gt; c) ? a : c) : ((b &gt; c) ? b : c);
+    printf("Largest = %d\n", big);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 14 29 8
+Largest = 29</code></pre>
+<h4>Even or odd inside printf</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    printf("%d is %s\n", n, (n % 2 == 0) ? "even" : "odd");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 12
+12 is even</code></pre>
+<h4>Absolute value</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    printf("%d\n", (n &lt; 0) ? -n : n);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: -25
+25</code></pre>
+<h4>Grade by a chained conditional</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks;
+    scanf("%d", &amp;marks);
+    char *g = (marks &gt;= 80) ? "A+" :
+              (marks &gt;= 70) ? "A"  :
+              (marks &gt;= 60) ? "B"  :
+              (marks &gt;= 50) ? "C"  : "F";
+    printf("Grade = %s\n", g);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 78
+Grade = A</code></pre>
+<h4>Leap year with ?:</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int y;
+    scanf("%d", &amp;y);
+    printf("%s\n", ((y % 4 == 0 &amp;&amp; y % 100 != 0) || y % 400 == 0) ? "Leap year" : "Not a leap year");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 1900
+Not a leap year</code></pre>
+<h4>Sign of a number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    printf("%s\n", (n &gt; 0) ? "Positive" : (n &lt; 0) ? "Negative" : "Zero");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 0
+Zero</code></pre>
+<h4>?: inside a loop</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 10; i++)
+        printf("%s ", (i % 2 == 0) ? "E" : "O");
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>O E O E O E O E O E</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Value of <code>x</code> after <code>int x = (5 &gt; 3) ? 10 : 20;</code>?<details><summary>Show answer</summary><p>10.</p></details></li>
     <li>Rewrite <code>if (n &gt; 0) s = 1; else s = -1;</code> using ?:.<details><summary>Show answer</summary><p><code>s = (n &gt; 0) ? 1 : -1;</code></p></details></li>
-  </ol></details>
+  <li>Why is <code>?:</code> called the ternary operator?<details><summary>Show answer</summary><div>Because it takes three operands: a condition and two values.</div></details></li>
+<li>Rewrite using <code>?:</code>:
+<pre><code>if (n &gt; 0) s = 1; else s = -1;</code></pre><details><summary>Show answer</summary><div><code>s = (n &gt; 0) ? 1 : -1;</code></div></details></li>
+<li>Can the conditional operator be nested? How is it evaluated?<details><summary>Show answer</summary><div>Yes. It associates right to left, so <code>c1 ? x : c2 ? y : z</code> means <code>c1 ? x : (c2 ? y : z)</code>.</div></details></li>
+<li>Find the smallest of three numbers using only <code>?:</code>.<details><summary>Show answer</summary><div><code>min = (a &lt; b) ? ((a &lt; c) ? a : c) : ((b &lt; c) ? b : c);</code></div></details></li>
+<li>Is <code>a &gt; b ? printf("A") : printf("B");</code> valid?<details><summary>Show answer</summary><div>Yes, both branches are expressions, but it is poor style. Use if-else for statements.</div></details></li>
+<li>Difference between if-else and <code>?:</code>?<details><summary>Show answer</summary><div>if-else is a statement and can hold many statements. <code>?:</code> is an expression, produces a value and holds one expression per branch.</div></details></li>
+<li>Predict the output:<pre><code>int a = 4, b = 9;
+int m = (a &gt; b) ? a : b;
+printf("%d %d\n", m, (a % 2 == 0) ? 100 : 200);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>9 100</code></pre></details></li>
+<li>Predict the output:<pre><code>int n = 0;
+printf("%s\n", n &gt; 0 ? "P" : n &lt; 0 ? "N" : "Z");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>Z</code></pre></details></li>
+</ol></details>
 </section>
 
 <div class="part"><span>Part D</span>Repetition</div>
@@ -1118,11 +2666,144 @@ done:
   <div class="box exam"><b>Exam focus</b>
     Likely questions: "Differentiate break and continue with example", "What is goto? Why avoid it?", "Predict the output" with <code>continue</code> inside a loop. Draw an iteration table to avoid mistakes.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>break: sum until a negative number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, sum = 0;
+    while (1) {
+        scanf("%d", &amp;n);
+        if (n &lt; 0) break;
+        sum += n;
+    }
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 4 7 2 -1
+Sum = 13</code></pre>
+<h4>break: first number divisible by both 5 and 7</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; ; i++) {
+        if (i % 5 == 0 &amp;&amp; i % 7 == 0) {
+            printf("%d\n", i);
+            break;
+        }
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>35</code></pre>
+<h4>continue: skip multiples of 5</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 10; i++) {
+        if (i % 5 == 0) continue;
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 2 3 4 6 7 8 9</code></pre>
+<h4>continue: sum of odd numbers 1 to 10</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int sum = 0;
+    for (int i = 1; i &lt;= 10; i++) {
+        if (i % 2 == 0) continue;
+        sum += i;
+    }
+    printf("Sum of odd numbers = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum of odd numbers = 25</code></pre>
+<h4>break: smallest divisor (prime test)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, d;
+    scanf("%d", &amp;n);
+    for (d = 2; d &lt; n; d++)
+        if (n % d == 0) break;
+    if (n &gt; 1 &amp;&amp; d == n) printf("%d is prime\n", n);
+    else                 printf("%d is not prime, divisible by %d\n", n, d);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 91
+91 is not prime, divisible by 7</code></pre>
+<h4>break: guessing game</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int secret = 5, guess, tries = 0;
+    while (1) {
+        scanf("%d", &amp;guess);
+        tries++;
+        if (guess == secret) break;
+        printf("Wrong\n");
+    }
+    printf("Guessed in %d attempts\n", tries);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 3 8 5
+Wrong
+Wrong
+Guessed in 3 attempts</code></pre>
+<h4>goto: leave nested loops (matrix search)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int m[2][3] = { {1, 2, 3}, {4, 7, 6} };
+    for (int i = 0; i &lt; 2; i++)
+        for (int j = 0; j &lt; 3; j++)
+            if (m[i][j] == 7) {
+                printf("Found at row %d, column %d\n", i, j);
+                goto done;
+            }
+    printf("Not found\n");
+done:
+    printf("Search finished\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Found at row 1, column 1
+Search finished</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Output of <code>for(i=1;i&lt;=5;i++){ if(i==3) break; printf("%d ",i);}</code>?<details><summary>Show answer</summary><p><code>1 2</code></p></details></li>
     <li>Output if <code>break</code> is changed to <code>continue</code>?<details><summary>Show answer</summary><p><code>1 2 4 5</code></p></details></li>
     <li>Can <code>continue</code> be used inside a plain <code>switch</code> that is not in a loop?<details><summary>Show answer</summary><p>No. <code>continue</code> is valid only inside a loop.</p></details></li>
-  </ol></details>
+  <li>Differentiate <code>break</code> and <code>continue</code>.<details><summary>Show answer</summary><div><code>break</code> ends the loop (or switch) completely. <code>continue</code> skips only the rest of the current iteration and goes to the next one.</div></details></li>
+<li>Where can <code>break</code> be used?<details><summary>Show answer</summary><div>Inside loops and inside <code>switch</code>.</div></details></li>
+<li>What is a label and how does <code>goto</code> use it?<details><summary>Show answer</summary><div>A label is a name followed by a colon (<code>done:</code>). <code>goto done;</code> jumps straight to it within the same function.</div></details></li>
+<li>Why should <code>goto</code> be avoided?<details><summary>Show answer</summary><div>It makes the program flow hard to follow and test (spaghetti code). Loops, functions and <code>break</code> are clearer.</div></details></li>
+<li>Can <code>continue</code> be used in a <code>switch</code>?<details><summary>Show answer</summary><div>Only if the switch is inside a loop. It then continues the loop, not the switch.</div></details></li>
+<li>Write a program to print numbers 1 to 20 except multiples of 4.<details><summary>Show answer</summary><div><pre><code>for (int i = 1; i &lt;= 20; i++) {
+    if (i % 4 == 0) continue;
+    printf("%d ", i);
+}</code></pre></div></details></li>
+<li>Predict the output:<pre><code>for (int i = 1; i &lt;= 6; i++) {
+    if (i % 2 == 0) continue;
+    if (i == 5) break;
+    printf("%d ", i);
+}
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>1 3</code></pre></details></li>
+<li>Predict the output:<pre><code>for (int i = 0; i &lt; 3; i++)
+    for (int j = 0; j &lt; 3; j++) {
+        if (j == 1) continue;
+        printf("%d%d ", i, j);
+    }
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>00 02 10 12 20 22</code></pre><p><code>continue</code> skips only the inner iteration where j is 1.</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 12 ============ -->
@@ -1255,11 +2936,275 @@ printf("GCD = %d", a);</code></pre>
     <li>Forgetting the <code>;</code> after <code>while (cond)</code> in a do-while.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Print 1 to 5 with all three loops</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int i;
+    for (i = 1; i &lt;= 5; i++) printf("%d ", i);
+    printf("\n");
+    i = 1;
+    while (i &lt;= 5) { printf("%d ", i); i++; }
+    printf("\n");
+    i = 1;
+    do { printf("%d ", i); i++; } while (i &lt;= 5);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 2 3 4 5
+1 2 3 4 5
+1 2 3 4 5</code></pre>
+<h4>Sum of the first n natural numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, sum = 0;
+    scanf("%d", &amp;n);
+    for (int i = 1; i &lt;= n; i++) sum += i;
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 100
+Sum = 5050</code></pre>
+<h4>Multiplication table</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    for (int i = 1; i &lt;= 10; i++)
+        printf("%d x %2d = %3d\n", n, i, n * i);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 7
+7 x  1 =   7
+7 x  2 =  14
+7 x  3 =  21
+7 x  4 =  28
+7 x  5 =  35
+7 x  6 =  42
+7 x  7 =  49
+7 x  8 =  56
+7 x  9 =  63
+7 x 10 =  70</code></pre>
+<h4>Factorial</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    unsigned long long f = 1;
+    scanf("%d", &amp;n);
+    for (int i = 2; i &lt;= n; i++) f *= i;
+    printf("%d! = %llu\n", n, f);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 10
+10! = 3628800</code></pre>
+<h4>Reverse a number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, rev = 0;
+    scanf("%d", &amp;n);
+    while (n &gt; 0) {
+        rev = rev * 10 + n % 10;
+        n /= 10;
+    }
+    printf("Reverse = %d\n", rev);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 12345
+Reverse = 54321</code></pre>
+<h4>Palindrome number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, orig, rev = 0;
+    scanf("%d", &amp;n);
+    orig = n;
+    while (n &gt; 0) { rev = rev * 10 + n % 10; n /= 10; }
+    printf("%s\n", rev == orig ? "Palindrome" : "Not a palindrome");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 12321
+Palindrome</code></pre>
+<h4>Count digits</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, count = 0;
+    scanf("%d", &amp;n);
+    do { count++; n /= 10; } while (n != 0);
+    printf("Digits = %d\n", count);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 2024
+Digits = 4</code></pre>
+<h4>Sum of digits</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, sum = 0;
+    scanf("%d", &amp;n);
+    while (n &gt; 0) { sum += n % 10; n /= 10; }
+    printf("Sum of digits = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 9875
+Sum of digits = 29</code></pre>
+<h4>Armstrong number (3 digits)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, orig, sum = 0;
+    scanf("%d", &amp;n);
+    orig = n;
+    while (n &gt; 0) {
+        int d = n % 10;
+        sum += d * d * d;
+        n /= 10;
+    }
+    printf("%s\n", sum == orig ? "Armstrong number" : "Not an Armstrong number");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 153
+Armstrong number</code></pre>
+<h4>Prime numbers from 2 to 30</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int n = 2; n &lt;= 30; n++) {
+        int prime = 1;
+        for (int i = 2; i * i &lt;= n; i++)
+            if (n % i == 0) { prime = 0; break; }
+        if (prime) printf("%d ", n);
+    }
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>2 3 5 7 11 13 17 19 23 29</code></pre>
+<h4>GCD and LCM</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+    scanf("%d %d", &amp;a, &amp;b);
+    int x = a, y = b;
+    while (y != 0) { int t = y; y = x % y; x = t; }
+    printf("GCD = %d, LCM = %d\n", x, a * b / x);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 48 18
+GCD = 6, LCM = 144</code></pre>
+<h4>Power without pow()</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int base, exp;
+    long long result = 1;
+    scanf("%d %d", &amp;base, &amp;exp);
+    for (int i = 1; i &lt;= exp; i++) result *= base;
+    printf("%lld\n", result);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 2 10
+1024</code></pre>
+<h4>Perfect number</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, sum = 0;
+    scanf("%d", &amp;n);
+    for (int i = 1; i &lt; n; i++)
+        if (n % i == 0) sum += i;
+    printf("%s\n", sum == n ? "Perfect number" : "Not a perfect number");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 28
+Perfect number</code></pre>
+<h4>Decimal to binary</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, bits[32], k = 0;
+    scanf("%d", &amp;n);
+    while (n &gt; 0) {
+        bits[k++] = n % 2;
+        n /= 2;
+    }
+    for (int i = k - 1; i &gt;= 0; i--) printf("%d", bits[i]);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 13
+1101</code></pre>
+<h4>Sum of even and odd numbers separately (1 to 10)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int even = 0, odd = 0;
+    for (int i = 1; i &lt;= 10; i++) {
+        if (i % 2 == 0) even += i;
+        else            odd += i;
+    }
+    printf("Even sum = %d, Odd sum = %d\n", even, odd);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Even sum = 30, Odd sum = 25</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>How many times does the body run: <code>for(i=10;i&gt;0;i-=3)</code>?<details><summary>Show answer</summary><p>4 times (i = 10, 7, 4, 1).</p></details></li>
     <li>Write a loop to print even numbers from 2 to 20.<details><summary>Show answer</summary><p><code>for(int i=2;i&lt;=20;i+=2) printf("%d ",i);</code></p></details></li>
     <li>Difference between <code>while</code> and <code>do-while</code>?<details><summary>Show answer</summary><p>while checks the condition first and may never run; do-while runs the body once before checking.</p></details></li>
-  </ol></details>
+  <li>Differentiate entry-controlled and exit-controlled loops.<details><summary>Show answer</summary><div>In an entry-controlled loop (<code>for</code>, <code>while</code>) the condition is checked before the body, so the body may never run. In an exit-controlled loop (<code>do-while</code>) it is checked after the body, so the body runs at least once.</div></details></li>
+<li>How many times does <code>for (i = 0; i &lt; 10; i++)</code> run?<details><summary>Show answer</summary><div>10 times (i = 0 to 9).</div></details></li>
+<li>What is an infinite loop? Write two ways.<details><summary>Show answer</summary><div>A loop whose condition never becomes false: <code>while (1) { }</code> and <code>for (;;) { }</code>.</div></details></li>
+<li>Convert <code>for (i = 1; i &lt;= 5; i++) printf("%d", i);</code> into a while loop.<details><summary>Show answer</summary><div><pre><code>i = 1;
+while (i &lt;= 5) {
+    printf("%d", i);
+    i++;
+}</code></pre></div></details></li>
+<li>How many times does the inner statement run if the outer loop runs 3 times and the inner loop 4 times?<details><summary>Show answer</summary><div>3 x 4 = 12 times.</div></details></li>
+<li>Which loop is best for a menu that must appear at least once?<details><summary>Show answer</summary><div><code>do-while</code>.</div></details></li>
+<li>What is the difference between <code>while (x)</code> and <code>while (x != 0)</code>?<details><summary>Show answer</summary><div>None. A non-zero value is true, so both behave the same.</div></details></li>
+<li>Write a program to print the sum of the squares of the first n numbers.<details><summary>Show answer</summary><div><pre><code>int n, sum = 0;
+scanf("%d", &amp;n);
+for (int i = 1; i &lt;= n; i++) sum += i * i;
+printf("%d", sum);</code></pre></div></details></li>
+<li>Predict the output:<pre><code>for (int i = 0; i &lt; 5; i += 2)
+    printf("%d ", i);
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>0 2 4</code></pre></details></li>
+<li>Predict the output:<pre><code>int i = 5;
+while (i--)
+    printf("%d ", i);
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>4 3 2 1 0</code></pre><p>The test uses the old value of i, then i is reduced, so the body sees 4, 3, 2, 1, 0.</p></details></li>
+<li>Predict the output:<pre><code>int s = 0;
+for (int i = 1; i &lt;= 4; i++)
+    for (int j = 1; j &lt;= i; j++)
+        s++;
+printf("%d\n", s);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>10</code></pre><p>The inner loop runs 1 + 2 + 3 + 4 = 10 times.</p></details></li>
+<li>Predict the output:<pre><code>int i = 10;
+do {
+    printf("%d ", i);
+} while (i &lt; 5);
+printf("\n");</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>10</code></pre></details></li>
+</ol></details>
 </section>
 
 <div class="part"><span>Part E</span>Arrays and series</div>
@@ -1378,11 +3323,280 @@ while (s1[len] != '\0') len++;      // own strlen → 5</code></pre>
     <li>Reading an uninitialized element.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Sum and average of an array</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100], sum = 0;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;a[i]);
+        sum += a[i];
+    }
+    printf("Sum = %d, Average = %.2f\n", sum, (float) sum / n);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5 10 20 30 40 50
+Sum = 150, Average = 30.00</code></pre>
+<h4>Maximum and minimum</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100];
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    int max = a[0], min = a[0];
+    for (int i = 1; i &lt; n; i++) {
+        if (a[i] &gt; max) max = a[i];
+        if (a[i] &lt; min) min = a[i];
+    }
+    printf("Max = %d, Min = %d\n", max, min);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 6 12 45 7 89 23 4
+Max = 89, Min = 4</code></pre>
+<h4>Linear search</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100], key, found = 0;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;key);
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] == key) {
+            printf("Found at index %d\n", i);
+            found = 1;
+            break;
+        }
+    if (!found) printf("Not found\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5 10 20 30 40 50 30
+Found at index 2</code></pre>
+<h4>Reverse an array</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100];
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    for (int i = n - 1; i &gt;= 0; i--) printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5 1 2 3 4 5
+5 4 3 2 1</code></pre>
+<h4>Count even and odd elements</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100], even = 0, odd = 0;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;a[i]);
+        if (a[i] % 2 == 0) even++;
+        else               odd++;
+    }
+    printf("Even = %d, Odd = %d\n", even, odd);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 6 1 2 3 4 5 6
+Even = 3, Odd = 3</code></pre>
+<h4>Bubble sort</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100];
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    for (int i = 0; i &lt; n - 1; i++)
+        for (int j = 0; j &lt; n - 1 - i; j++)
+            if (a[j] &gt; a[j + 1]) {
+                int t = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = t;
+            }
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5 64 25 12 22 11
+11 12 22 25 64</code></pre>
+<h4>Second largest element</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100];
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    int first  = a[0] &gt; a[1] ? a[0] : a[1];
+    int second = a[0] &gt; a[1] ? a[1] : a[0];
+    for (int i = 2; i &lt; n; i++) {
+        if (a[i] &gt; first)       { second = first; first = a[i]; }
+        else if (a[i] &gt; second) { second = a[i]; }
+    }
+    printf("Second largest = %d\n", second);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 5 12 35 1 10 34
+Second largest = 34</code></pre>
+<h4>Count how many times a value appears</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, a[100], key, count = 0;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;key);
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] == key) count++;
+    printf("%d appears %d time(s)\n", key, count);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 8 4 2 4 7 4 1 2 4 4
+4 appears 4 time(s)</code></pre>
+<h4>Add two 2x2 matrices</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int A[2][2], B[2][2];
+    for (int i = 0; i &lt; 2; i++)
+        for (int j = 0; j &lt; 2; j++) scanf("%d", &amp;A[i][j]);
+    for (int i = 0; i &lt; 2; i++)
+        for (int j = 0; j &lt; 2; j++) scanf("%d", &amp;B[i][j]);
+    for (int i = 0; i &lt; 2; i++) {
+        for (int j = 0; j &lt; 2; j++)
+            printf("%d ", A[i][j] + B[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 1 2 3 4 5 6 7 8
+6 8
+10 12</code></pre>
+<h4>Transpose of a matrix</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int m[2][3] = { {1, 2, 3}, {4, 5, 6} };
+    for (int j = 0; j &lt; 3; j++) {
+        for (int i = 0; i &lt; 2; i++)
+            printf("%d ", m[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 4
+2 5
+3 6</code></pre>
+<h4>Diagonal sums of a 3x3 matrix</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int m[3][3] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+    int main_d = 0, sec_d = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        main_d += m[i][i];
+        sec_d  += m[i][2 - i];
+    }
+    printf("Main diagonal = %d, Secondary diagonal = %d\n", main_d, sec_d);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Main diagonal = 15, Secondary diagonal = 15</code></pre>
+<h4>Multiply two 2x2 matrices</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int A[2][2] = { {1, 2}, {3, 4} };
+    int B[2][2] = { {5, 6}, {7, 8} };
+    int C[2][2] = { {0, 0}, {0, 0} };
+    for (int i = 0; i &lt; 2; i++)
+        for (int j = 0; j &lt; 2; j++)
+            for (int k = 0; k &lt; 2; k++)
+                C[i][j] += A[i][k] * B[k][j];
+    for (int i = 0; i &lt; 2; i++)
+        printf("%d %d\n", C[i][0], C[i][1]);
+    return 0;
+}</code></pre>
+<pre class="out"><code>19 22
+43 50</code></pre>
+<h4>String length, reverse and palindrome check</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char s[50];
+    scanf("%s", s);
+    int len = strlen(s), pal = 1;
+    printf("Length = %d\n", len);
+    printf("Reverse = ");
+    for (int i = len - 1; i &gt;= 0; i--) putchar(s[i]);
+    printf("\n");
+    for (int i = 0; i &lt; len / 2; i++)
+        if (s[i] != s[len - 1 - i]) pal = 0;
+    printf("%s\n", pal ? "Palindrome" : "Not a palindrome");
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: madam
+Length = 5
+Reverse = madam
+Palindrome</code></pre>
+<h4>Count vowels in a string</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char s[100];
+    int count = 0;
+    scanf("%s", s);
+    for (int i = 0; s[i] != '\0'; i++) {
+        char c = tolower(s[i]);
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+            count++;
+    }
+    printf("Vowels = %d\n", count);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: Programming
+Vowels = 3</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>For <code>int a[] = {3,6,9,12};</code> what are <code>a[2]</code> and the number of elements?<details><summary>Show answer</summary><p>9 and 4.</p></details></li>
     <li>Write code to count even numbers in an array.<details><summary>Show answer</summary><p><code>int c=0; for(i=0;i&lt;n;i++) if(a[i]%2==0) c++;</code></p></details></li>
     <li>What is the size in bytes of <code>double d[10]</code>?<details><summary>Show answer</summary><p>80 (10 × 8).</p></details></li>
-  </ol></details>
+  <li>What is an array and why is it used?<details><summary>Show answer</summary><div>An array stores many values of the same type under one name in continuous memory, so large sets of data can be handled with a loop instead of many separate variables.</div></details></li>
+<li>Why does array indexing start from 0?<details><summary>Show answer</summary><div>The index is an offset from the starting address. The first element is at offset 0.</div></details></li>
+<li>What happens if you use an index outside the array?<details><summary>Show answer</summary><div>Undefined behaviour: the program may print garbage, overwrite other data or crash. C does not check bounds.</div></details></li>
+<li>How do you find the number of elements of an array <code>a</code>?<details><summary>Show answer</summary><div><code>sizeof(a) / sizeof(a[0])</code></div></details></li>
+<li>How many bytes does <code>char s[] = "abc";</code> use?<details><summary>Show answer</summary><div>4 bytes: <code>a</code>, <code>b</code>, <code>c</code> and the null character <code>'\0'</code>.</div></details></li>
+<li>Difference between a 1D and a 2D array?<details><summary>Show answer</summary><div>A 1D array has one index (<code>a[i]</code>) and is a list. A 2D array has two (<code>m[i][j]</code>) and is a table of rows and columns.</div></details></li>
+<li>Why can't we compare two strings with <code>==</code>?<details><summary>Show answer</summary><div><code>==</code> compares addresses, not contents. Use <code>strcmp(a, b) == 0</code>.</div></details></li>
+<li>Write a program to copy one array into another.<details><summary>Show answer</summary><div><pre><code>for (int i = 0; i &lt; n; i++) b[i] = a[i];</code></pre></div></details></li>
+<li>Predict the output:<pre><code>int a[5] = {1, 2, 3};
+printf("%d %d %d\n", a[0], a[3], a[4]);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>1 0 0</code></pre><p>Elements without an initializer in a partially initialized array become 0.</p></details></li>
+<li>Predict the output:<pre><code>int a[] = {5, 10, 15, 20};
+printf("%d %d\n", a[1] + a[2], (int)(sizeof a / sizeof a[0]));</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>25 4</code></pre></details></li>
+<li>Predict the output:<pre><code>char s[] = "Hello";
+printf("%zu %zu\n", strlen(s), sizeof s);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>5 6</code></pre><p><code>strlen</code> does not count the null character but <code>sizeof</code> does.</p></details></li>
+<li>Predict the output:<pre><code>int m[2][2] = { {1, 2}, {3, 4} };
+printf("%d\n", m[1][0] + m[0][1]);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>5</code></pre></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 14 ============ -->
@@ -1449,11 +3663,110 @@ while (i++ &lt; 4)           // compare the OLD i, then increase
   <div class="box warn"><b>Never change a variable twice in one expression</b>
     Code such as <code>x++ + ++x</code>, <code>i = i++</code> or <code>printf("%d %d", x, x++)</code> has <b>undefined behaviour</b>: different compilers give different answers. Exams may show it, but real programs must avoid it.</div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Pre-increment vs post-increment</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 5, b = 5;
+    printf("post: %d\n", a++);      /* uses 5, then a becomes 6 */
+    printf("after: %d\n", a);
+    printf("pre : %d\n", ++b);      /* b becomes 6, then uses 6 */
+    printf("after: %d\n", b);
+    return 0;
+}</code></pre>
+<pre class="out"><code>post: 5
+after: 6
+pre : 6
+after: 6</code></pre>
+<h4>Increment and decrement inside one expression</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 5, y = 10;
+    int z = x++ + y--;
+    printf("z = %d, x = %d, y = %d\n", z, x, y);
+    return 0;
+}</code></pre>
+<pre class="out"><code>z = 15, x = 6, y = 9</code></pre>
+<h4>Counting forward and backward</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 5; i++) printf("%d ", i);
+    printf("\n");
+    for (int i = 5; i &gt;= 1; i--) printf("%d ", i);
+    printf("\n");
+    for (int i = 0; i &lt;= 10; i += 5) printf("%d ", i);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 2 3 4 5
+5 4 3 2 1
+0 5 10</code></pre>
+<h4>Using i++ as an array index</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a[4] = {1, 2, 3, 4};
+    int i = 0;
+    while (i &lt; 4)
+        printf("%d ", a[i++]);
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 2 3 4</code></pre>
+<h4>Counter with ++: multiples of 3 up to 20</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int count = 0;
+    for (int i = 1; i &lt;= 20; i++)
+        if (i % 3 == 0) count++;
+    printf("Count = %d\n", count);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Count = 6</code></pre>
+<h4>Prefix vs postfix in a loop condition</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int i = 0, j = 0;
+    while (++i &lt; 3) printf("%d ", i);
+    printf("(i = %d)\n", i);
+    while (j++ &lt; 3) printf("%d ", j);
+    printf("(j = %d)\n", j);
+    return 0;
+}</code></pre>
+<pre class="out"><code>1 2 (i = 3)
+1 2 3 (j = 4)</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li><code>int x = 5, y = 10; int z = x++ + y--;</code> Find x, y, z.<details><summary>Show answer</summary><p>z = 5 + 10 = 15, then x = 6, y = 9.</p></details></li>
     <li><code>int a = 4; int b = ++a + 2;</code> Find a and b.<details><summary>Show answer</summary><p>a becomes 5 first, so b = 7.</p></details></li>
     <li>Output of <code>int i = 0; while (i &lt; 3) printf("%d ", i++);</code>?<details><summary>Show answer</summary><p><code>0 1 2</code></p></details></li>
-  </ol></details>
+  <li>Difference between <code>++x</code> and <code>x++</code>?<details><summary>Show answer</summary><div><code>++x</code> increases x first and then uses the new value. <code>x++</code> uses the old value first and then increases x.</div></details></li>
+<li>Why is <code>i = i++;</code> a bad statement?<details><summary>Show answer</summary><div>It changes <code>i</code> twice in one expression, which is undefined behaviour. Different compilers can give different answers.</div></details></li>
+<li>Can we write <code>5++</code>?<details><summary>Show answer</summary><div>No. <code>++</code> needs a variable (something that has a memory location), not a constant.</div></details></li>
+<li>Write a loop that prints 10 down to 1 using <code>--</code>.<details><summary>Show answer</summary><div><pre><code>for (int i = 10; i &gt;= 1; i--) printf("%d ", i);</code></pre></div></details></li>
+<li>What is the difference between <code>x++;</code> and <code>++x;</code> as stand-alone statements?<details><summary>Show answer</summary><div>None. Both just increase x by one. The difference appears only when the value is used in the same expression.</div></details></li>
+<li>Rewrite <code>x = x + 1;</code> and <code>y = y - 1;</code> in shorter forms.<details><summary>Show answer</summary><div><code>x++;</code> or <code>x += 1;</code> and <code>y--;</code> or <code>y -= 1;</code></div></details></li>
+<li>Predict the output:<pre><code>int a = 5;
+int b = a++ + 10;
+printf("%d %d\n", a, b);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>6 15</code></pre><p>a++ gives 5, so b = 15, and then a becomes 6.</p></details></li>
+<li>Predict the output:<pre><code>int i = 5;
+int j = --i * 2;
+printf("%d %d\n", i, j);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>4 8</code></pre></details></li>
+<li>Predict the output:<pre><code>int a = 1, b = 2;
+int c = a++ + ++b;
+printf("%d %d %d\n", a, b, c);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>2 3 4</code></pre><p>a++ gives 1 (a becomes 2), ++b gives 3 (b becomes 3), so c = 1 + 3 = 4.</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 15 ============ -->
@@ -1549,11 +3862,197 @@ for (int i = 0; i &lt; n; i++) { printf("%.0f ", t); t *= r; }  // GP terms</cod
     <li>Off-by-one in the number of terms. Check with n = 1.</li>
   </ul></div>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Sum of n, squares and cubes</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 5, s1 = 0, s2 = 0, s3 = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        s1 += i;
+        s2 += i * i;
+        s3 += i * i * i;
+    }
+    printf("%d %d %d\n", s1, s2, s3);
+    return 0;
+}</code></pre>
+<pre class="out"><code>15 55 225</code></pre>
+<h4>Sum of the first n odd numbers</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 5, sum = 0;
+    for (int i = 1; i &lt;= n; i++) sum += 2 * i - 1;     /* 1 + 3 + 5 + 7 + 9 */
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum = 25</code></pre>
+<h4>Fibonacci: first 10 terms</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 0, b = 1, next;
+    for (int i = 1; i &lt;= 10; i++) {
+        printf("%d ", a);
+        next = a + b;
+        a = b;
+        b = next;
+    }
+    printf("\n");
+    return 0;
+}</code></pre>
+<pre class="out"><code>0 1 1 2 3 5 8 13 21 34</code></pre>
+<h4>Harmonic-type series: 1 + 1/2 + 1/3 + ... + 1/5</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double sum = 0;
+    for (int i = 1; i &lt;= 5; i++) sum += 1.0 / i;
+    printf("%.4f\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>2.2833</code></pre>
+<h4>Series 1/1! + 1/2! + ... + 1/5!</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double sum = 0, fact = 1;
+    for (int i = 1; i &lt;= 5; i++) {
+        fact *= i;
+        sum += 1.0 / fact;
+    }
+    printf("%.4f\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>1.7167</code></pre>
+<h4>e^x series (x = 2, 10 terms)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double x = 2, term = 1, sum = 1;
+    for (int i = 1; i &lt;= 10; i++) {
+        term = term * x / i;
+        sum += term;
+    }
+    printf("e^2 is about %.4f\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>e^2 is about 7.3890</code></pre>
+<h4>sin(x) series (x = 1 radian)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main()
+{
+    double x = 1, term = x, sum = x;
+    for (int i = 1; i &lt;= 4; i++) {
+        term *= -x * x / ((2 * i) * (2 * i + 1));
+        sum += term;
+    }
+    printf("sin(1) is about %.4f\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>sin(1) is about 0.8415</code></pre>
+<h4>Alternating series 1 - 2 + 3 - 4 + ... (7 terms)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int sum = 0, sign = 1;
+    for (int i = 1; i &lt;= 7; i++) {
+        sum += sign * i;
+        sign = -sign;
+    }
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum = 4</code></pre>
+<h4>Arithmetic and geometric series</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 3, d = 4, n = 6, ap = 0;
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", a + i * d);
+        ap += a + i * d;
+    }
+    printf("-&gt; sum %d\n", ap);
+
+    int r = 3, t = 2, gp = 0;
+    for (int i = 0; i &lt; 5; i++) {
+        printf("%d ", t);
+        gp += t;
+        t *= r;
+    }
+    printf("-&gt; sum %d\n", gp);
+    return 0;
+}</code></pre>
+<pre class="out"><code>3 7 11 15 19 23 -&gt; sum 78
+2 6 18 54 162 -&gt; sum 242</code></pre>
+<h4>Series 1 + (1+2) + (1+2+3) + ... (4 groups)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int inner = 0, sum = 0;
+    for (int i = 1; i &lt;= 4; i++) {
+        inner += i;       /* 1, 3, 6, 10 */
+        sum += inner;
+    }
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum = 20</code></pre>
+<h4>Series 1 + 11 + 111 + 1111</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int term = 0, sum = 0;
+    for (int i = 1; i &lt;= 4; i++) {
+        term = term * 10 + 1;
+        sum += term;
+    }
+    printf("Sum = %d\n", sum);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Sum = 1234</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Write the loop body for 2 + 4 + 6 + … (n terms).<details><summary>Show answer</summary><p><code>sum += 2 * i;</code></p></details></li>
     <li>Find the 7th Fibonacci term if the series starts 0, 1.<details><summary>Show answer</summary><p>0 1 1 2 3 5 8, so the 7th term is 8.</p></details></li>
     <li>Series: 1 + (1+2) + (1+2+3) + … up to n groups. How?<details><summary>Show answer</summary><p>Keep an inner running total: <code>inner += i; sum += inner;</code> in one loop.</p></details></li>
-  </ol></details>
+  <li>Write the n-th term of 1, 4, 9, 16, 25, ...<details><summary>Show answer</summary><div>n squared: <code>i * i</code>.</div></details></li>
+<li>How can you avoid calculating the factorial from scratch for each term?<details><summary>Show answer</summary><div>Keep a running variable and update it in the same loop: <code>fact *= i;</code>.</div></details></li>
+<li>Why does <code>sum += 1 / i;</code> give a wrong answer?<details><summary>Show answer</summary><div><code>1 / i</code> is integer division and is 0 for every i greater than 1. Use <code>1.0 / i</code>.</div></details></li>
+<li>Find the 8th Fibonacci term if the series starts 0, 1.<details><summary>Show answer</summary><div>0 1 1 2 3 5 8 13, so the 8th term is 13.</div></details></li>
+<li>Find 1 + 1/2 + 1/3 + 1/4 + 1/5 to four decimals.<details><summary>Show answer</summary><div>2.2833.</div></details></li>
+<li>What should <code>sum</code> and <code>product</code> be initialized to?<details><summary>Show answer</summary><div><code>sum</code> to 0 and <code>product</code> to 1.</div></details></li>
+<li>Write the loop body for the series 2 + 4 + 6 + ... (n terms).<details><summary>Show answer</summary><div><code>sum += 2 * i;</code></div></details></li>
+<li>Predict the output:<pre><code>int s = 0;
+for (int i = 1; i &lt;= 5; i++) s += i * i;
+printf("%d\n", s);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>55</code></pre></details></li>
+<li>Predict the output:<pre><code>int a = 0, b = 1;
+for (int i = 0; i &lt; 5; i++) {
+    int t = a + b;
+    a = b;
+    b = t;
+}
+printf("%d %d\n", a, b);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>5 8</code></pre></details></li>
+<li>Predict the output:<pre><code>double s1 = 0, s2 = 0;
+for (int i = 1; i &lt;= 3; i++) {
+    s1 += 1 / i;
+    s2 += 1.0 / i;
+}
+printf("%.2f %.2f\n", s1, s2);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>1.00 1.83</code></pre><p><code>1 / i</code> is integer division: 1 + 0 + 0 = 1. With <code>1.0 / i</code> the sum is 1 + 0.5 + 0.33 = 1.83.</p></details></li>
+</ol></details>
 </section>
 
 <!-- ============ 16 ============ -->
@@ -1669,11 +4168,174 @@ for (int i = 1; i &lt;= 4; i++) {
 A B
 A B C </code></pre>
 
-  <details class="practice"><summary>Practice questions</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Number triangle: 1 / 22 / 333 / 4444</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 4; i++) {
+        for (int j = 1; j &lt;= i; j++) printf("%d", i);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>1
+22
+333
+4444</code></pre>
+<h4>Inverted pyramid</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 4;
+    for (int i = n; i &gt;= 1; i--) {
+        for (int s = 1; s &lt;= n - i; s++) printf(" ");
+        for (int j = 1; j &lt;= 2 * i - 1; j++) printf("*");
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>*******
+ *****
+  ***
+   *</code></pre>
+<h4>Hollow pyramid</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 4;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int s = 1; s &lt;= n - i; s++) printf(" ");
+        for (int j = 1; j &lt;= 2 * i - 1; j++)
+            printf((j == 1 || j == 2 * i - 1 || i == n) ? "*" : " ");
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>   *
+  * *
+ *   *
+*******</code></pre>
+<h4>Hollow right triangle</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 5;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = 1; j &lt;= i; j++)
+            printf((j == 1 || j == i || i == n) ? "*" : " ");
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>*
+**
+* *
+*  *
+*****</code></pre>
+<h4>Number pyramid: 1 / 121 / 12321 / 1234321</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 4;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int s = 1; s &lt;= n - i; s++) printf(" ");
+        for (int j = 1; j &lt;= i; j++) printf("%d", j);
+        for (int j = i - 1; j &gt;= 1; j--) printf("%d", j);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>   1
+  121
+ 12321
+1234321</code></pre>
+<h4>Binary triangle (1 / 01 / 101 / 0101)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 4; i++) {
+        for (int j = 1; j &lt;= i; j++)
+            printf("%d", (i + j) % 2 == 0);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>1
+01
+101
+0101</code></pre>
+<h4>Pascal's triangle (5 rows)</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 5;
+    for (int i = 0; i &lt; n; i++) {
+        for (int s = 0; s &lt; (n - i - 1) * 2; s++) printf(" ");
+        int c = 1;
+        for (int j = 0; j &lt;= i; j++) {
+            printf("%4d", c);
+            c = c * (i - j) / (j + 1);
+        }
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>           1
+         1   1
+       1   2   1
+     1   3   3   1
+   1   4   6   4   1</code></pre>
+<h4>Alphabet pyramid</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n = 4;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int s = 1; s &lt;= n - i; s++) printf(" ");
+        for (int j = 1; j &lt;= i; j++) printf("%c", 'A' + j - 1);
+        for (int j = i - 1; j &gt;= 1; j--) printf("%c", 'A' + j - 1);
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+<pre class="out"><code>   A
+  ABA
+ ABCBA
+ABCDCBA</code></pre>
+<details class="practice"><summary>Practice questions</summary><ol>
     <li>Which formula gives the number of stars in row i of a pyramid?<details><summary>Show answer</summary><p>2i − 1.</p></details></li>
     <li>For an inverted pyramid of n rows, what should the outer loop look like?<details><summary>Show answer</summary><p><code>for (int i = n; i &gt;= 1; i--)</code> with spaces <code>n − i</code> and stars <code>2i − 1</code>.</p></details></li>
     <li>What changes in the right triangle program to print numbers 1, 2, 3 instead of stars?<details><summary>Show answer</summary><p>Print <code>j</code> (or <code>i</code> for repeated row numbers) with <code>%d</code> instead of a star.</p></details></li>
-  </ol></details>
+  <li>How many stars are printed by the right triangle for n = 6?<details><summary>Show answer</summary><div>1 + 2 + 3 + 4 + 5 + 6 = 21.</div></details></li>
+<li>In a pyramid with n = 5, how many spaces come before the stars of row 2?<details><summary>Show answer</summary><div>n - i = 5 - 2 = 3 spaces.</div></details></li>
+<li>Which loops are needed to print a diamond?<details><summary>Show answer</summary><div>Two outer loops, one for the upper half (1 to n) and one for the lower half (n-1 down to 1), each with an inner loop for spaces and one for stars.</div></details></li>
+<li>Give the number of stars in row i of a pyramid, and of an inverted pyramid with n rows.<details><summary>Show answer</summary><div>Both use <code>2 * i - 1</code>. For the inverted pyramid the outer loop runs from n down to 1.</div></details></li>
+<li>Write an inner loop that prints 5 4 3 2 1.<details><summary>Show answer</summary><div><code>for (int j = 5; j &gt;= 1; j--) printf("%d ", j);</code></div></details></li>
+<li>How do you print a hollow square?<details><summary>Show answer</summary><div>Print a star only if <code>i == 1 || i == n || j == 1 || j == n</code>, otherwise print a space.</div></details></li>
+<li>Predict the output:<pre><code>for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 3; j &gt; i; j--) printf(" ");
+    for (int j = 1; j &lt;= i; j++) printf("*");
+    printf("\n");
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>  *
+ **
+***</code></pre></details></li>
+<li>Predict the output:<pre><code>for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= i; j++) printf("%d", j);
+    printf("\n");
+}</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>1
+12
+123</code></pre></details></li>
+</ol></details>
 </section>
 
 <div class="part"><span>Part F</span>Revision</div>
@@ -1729,7 +4391,150 @@ int a[n];   a[i];   m[r][c];   char s[n+1];</code></pre>
     <li>One <b>closing line</b> (use, advantage, or limitation).</li>
   </ol>
 
-  <details class="practice" open><summary>Mixed practice set (answers inside)</summary><ol>
+  <h3>More common programs</h3>
+<p class="cap">Press "Show output" under a program, or use the switch at the top to show every output.</p>
+<h4>Student result: total, average, highest and grade</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks[5] = {78, 85, 62, 90, 55};
+    int total = 0, max = marks[0];
+    for (int i = 0; i &lt; 5; i++) {
+        total += marks[i];
+        if (marks[i] &gt; max) max = marks[i];
+    }
+    float avg = total / 5.0;
+    char *grade = (avg &gt;= 80) ? "A+" : (avg &gt;= 70) ? "A" : (avg &gt;= 60) ? "B" : "C";
+    printf("Total=%d Average=%.2f Highest=%d Grade=%s\n", total, avg, max, grade);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Total=370 Average=74.00 Highest=90 Grade=A</code></pre>
+<h4>Number analyzer</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    scanf("%d", &amp;n);
+    int prime = (n &gt; 1), sum = 0, rev = 0, t = n, proper = 0;
+    for (int i = 2; i * i &lt;= n; i++)
+        if (n % i == 0) { prime = 0; break; }
+    for (int i = 1; i &lt; n; i++)
+        if (n % i == 0) proper += i;
+    while (t &gt; 0) { sum += t % 10; rev = rev * 10 + t % 10; t /= 10; }
+    printf("%s\n", n % 2 == 0 ? "Even" : "Odd");
+    printf("%s\n", prime ? "Prime" : "Not prime");
+    printf("%s\n", proper == n ? "Perfect" : "Not perfect");
+    printf("Digit sum = %d, Reverse = %d\n", sum, rev);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 28
+Even
+Not prime
+Perfect
+Digit sum = 10, Reverse = 82</code></pre>
+<h4>ATM menu with switch inside a loop</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int choice;
+    double balance = 1000, amount;
+    do {
+        scanf("%d", &amp;choice);
+        switch (choice) {
+            case 1:
+                scanf("%lf", &amp;amount);
+                balance += amount;
+                printf("Deposited %.2f\n", amount);
+                break;
+            case 2:
+                scanf("%lf", &amp;amount);
+                if (amount &lt;= balance) {
+                    balance -= amount;
+                    printf("Withdrawn %.2f\n", amount);
+                } else {
+                    printf("Insufficient balance\n");
+                }
+                break;
+            case 3:
+                printf("Balance = %.2f\n", balance);
+                break;
+            case 4:
+                printf("Thank you\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+    } while (choice != 4);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 1 500 2 200 2 5000 3 4
+Deposited 500.00
+Withdrawn 200.00
+Insufficient balance
+Balance = 1300.00
+Thank you</code></pre>
+<h4>Count positive, negative and zero values</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n, x, pos = 0, neg = 0, zero = 0;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;x);
+        if (x &gt; 0)      pos++;
+        else if (x &lt; 0) neg++;
+        else            zero++;
+    }
+    printf("Positive=%d Negative=%d Zero=%d\n", pos, neg, zero);
+    return 0;
+}</code></pre>
+<pre class="out"><code>Input: 6 5 -3 0 8 -1 0
+Positive=2 Negative=2 Zero=2</code></pre>
+<h4>Celsius to Fahrenheit table</h4>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("%-8s%-8s\n", "C", "F");
+    for (int c = 0; c &lt;= 100; c += 20)
+        printf("%-8d%-8.1f\n", c, c * 9.0 / 5 + 32);
+    return 0;
+}</code></pre>
+<pre class="out"><code>C       F
+0       32.0
+20      68.0
+40      104.0
+60      140.0
+80      176.0
+100     212.0</code></pre>
+<h3>Common programs checklist</h3>
+<p class="cap">Tick these off before the exam. The section shows where a solved version is.</p>
+<div class="tablewrap"><table>
+<tr><th>Program</th><th>Section</th></tr>
+<tr><td>Hello world, sum of two numbers, simple interest</td><td><a href="#s1">1</a></td></tr>
+<tr><td>Area and perimeter, temperature and time conversion</td><td><a href="#s3">3</a></td></tr>
+<tr><td>Swap two numbers (with and without temp), average with casting</td><td><a href="#s5">5</a></td></tr>
+<tr><td>Digits of a number (hundreds, tens, ones)</td><td><a href="#s7">7</a></td></tr>
+<tr><td>Odd/even, positive/negative, leap year, largest of three</td><td><a href="#s8">8</a></td></tr>
+<tr><td>Vowel or consonant, character type, quadratic roots, bill slab</td><td><a href="#s8">8</a></td></tr>
+<tr><td>GPA from marks and CGPA from courses</td><td><a href="#s8">8</a></td></tr>
+<tr><td>Complete CGPA calculator with switch and input validation</td><td><a href="#s9">9</a></td></tr>
+<tr><td>Calculator, day name, month days, menu-driven program</td><td><a href="#s9">9</a></td></tr>
+<tr><td>Max/min with the conditional operator</td><td><a href="#s10">10</a></td></tr>
+<tr><td>Sum until negative, prime check with break, goto exit</td><td><a href="#s11">11</a></td></tr>
+<tr><td>Factorial, multiplication table, reverse, palindrome, Armstrong</td><td><a href="#s12">12</a></td></tr>
+<tr><td>Prime numbers in a range, GCD and LCM, perfect number, decimal to binary</td><td><a href="#s12">12</a></td></tr>
+<tr><td>Sum, max/min, search, reverse and sort of an array</td><td><a href="#s13">13</a></td></tr>
+<tr><td>Matrix addition, transpose, multiplication, diagonal sums</td><td><a href="#s13">13</a></td></tr>
+<tr><td>String length, reverse, palindrome, vowel count</td><td><a href="#s13">13</a></td></tr>
+<tr><td>Fibonacci, factorial series, e^x, alternating series</td><td><a href="#s15">15</a></td></tr>
+<tr><td>Triangle, pyramid, diamond, hollow and number patterns</td><td><a href="#s16">16</a></td></tr>
+</table></div>
+<details class="practice" open><summary>Mixed practice set (answers inside)</summary><ol>
     <li>Predict the output:<pre><code>int x = 10;
 if (x &gt; 5) { if (x &lt; 8) printf("A"); else printf("B"); }
 else printf("C");</code></pre><details><summary>Show answer</summary><p><code>B</code></p></details></li>
@@ -1743,7 +4548,28 @@ printf("%d", s);</code></pre><details><summary>Show answer</summary><p>Only odd 
     <li>How many stars does the right triangle program print for n = 5?<details><summary>Show answer</summary><p>1 + 2 + 3 + 4 + 5 = 15.</p></details></li>
     <li>Convert to a ternary: <code>if (a % 2 == 0) r = 1; else r = 0;</code><details><summary>Show answer</summary><p><code>r = (a % 2 == 0) ? 1 : 0;</code></p></details></li>
     <li>Which loop would you use for a menu that must show at least once?<details><summary>Show answer</summary><p><code>do-while</code>.</p></details></li>
-  </ol></details>
+  <li>Write a program that reads n numbers and prints their sum, average, maximum and minimum.<details><summary>Show answer</summary><div>Read into an array, keep <code>sum</code>, <code>max</code> and <code>min</code> while looping, and print <code>(float) sum / n</code> for the average. See the array programs in section 13.</div></details></li>
+<li>Which loop would you use to keep asking for a password until it is correct?<details><summary>Show answer</summary><div><code>do-while</code> (or <code>while (1)</code> with <code>break</code>), because the prompt must appear at least once.</div></details></li>
+<li>A student scores 45 in theory and 38 in practical. Pass needs at least 40 in each. Write the condition.<details><summary>Show answer</summary><div><code>theory &gt;= 40 &amp;&amp; practical &gt;= 40</code>. Here the result is Fail because practical is below 40.</div></details></li>
+<li>Why is <code>float f = 0.1 + 0.2; if (f == 0.3)</code> unreliable?<details><summary>Show answer</summary><div>Decimal fractions like 0.1 cannot be stored exactly in binary, so the sum is slightly different from 0.3. Compare with a small tolerance.</div></details></li>
+<li>List five syntax rules that avoid most beginner errors.<details><summary>Show answer</summary><div>End statements with <code>;</code>; match every <code>{</code> with <code>}</code>; use <code>==</code> in conditions; put <code>&amp;</code> in <code>scanf</code> for normal variables; declare variables before use.</div></details></li>
+<li>Which header files are needed for <code>printf</code>, <code>sqrt</code>, <code>strlen</code> and <code>toupper</code>?<details><summary>Show answer</summary><div><code>stdio.h</code>, <code>math.h</code>, <code>string.h</code> and <code>ctype.h</code>.</div></details></li>
+<li>Predict the output:<pre><code>int i, s = 0;
+for (i = 1; i &lt;= 10; i++) {
+    if (i % 3 == 0) continue;
+    if (s &gt; 20) break;
+    s += i;
+}
+printf("%d %d\n", i, s);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>10 27</code></pre><p>Multiples of 3 are skipped. s grows 1, 3, 7, 12, 19, 27 and at i = 10 the test s &gt; 20 is true, so the loop breaks.</p></details></li>
+<li>Predict the output:<pre><code>int a[5] = {2, 4, 6, 8, 10}, s = 0;
+for (int i = 0; i &lt; 5; i++)
+    s += (i % 2 == 0) ? a[i] : -a[i];
+printf("%d\n", s);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>6</code></pre><p>2 - 4 + 6 - 8 + 10 = 6.</p></details></li>
+<li>Predict the output:<pre><code>int x = 5, y = 2;
+printf("%d %d %.1f\n", x / y, x % y, (float) x / y);
+printf("%d\n", x &gt; y &amp;&amp; y &gt; 0 ? x - y : x + y);</code></pre><details><summary>Show answer</summary><p><b>Output:</b></p><pre><code>2 1 2.5
+3</code></pre></details></li>
+</ol></details>
 
   <h2 id="refs" style="margin-top:38px">References</h2>
   <ol class="refs">
@@ -1777,6 +4603,23 @@ printf("%d", s);</code></pre><details><summary>Show answer</summary><p>Only odd 
       });
     },{rootMargin:'-10% 0px -80% 0px'});
     secs.forEach(function(s){io.observe(s);});
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  try{
+    var pairs=[];
+    function setOut(p,b,on){p.classList.toggle("shown",on);b.setAttribute("aria-expanded",on?"true":"false");b.textContent=on?"\u25BC Hide output":"\u25B6 Show output";}
+    [].slice.call(document.querySelectorAll("pre.out")).forEach(function(p){
+      var b=document.createElement("button");b.type="button";b.className="runbtn";b.setAttribute("aria-expanded","false");b.textContent="\u25B6 Show output";
+      p.parentNode.insertBefore(b,p);pairs.push([p,b]);
+      b.addEventListener("click",function(){setOut(p,b,!p.classList.contains("shown"));});
+    });
+    var all=document.getElementById("showAllOut");
+    if(all)all.addEventListener("change",function(){pairs.forEach(function(x){setOut(x[0],x[1],all.checked);});});
+    var ans=document.getElementById("openAllAns");
+    if(ans)ans.addEventListener("change",function(){[].slice.call(document.querySelectorAll("details.practice, details.practice details")).forEach(function(d){d.open=ans.checked;});});
   }catch(e){}
 })();
 </script>
